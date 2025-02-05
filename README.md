@@ -1,4 +1,4 @@
-# **ECOAPETITE: Comida excelente a un precio decente** 🍽️💚  
+# **ECOAPETITE: Comida excelente a un precio decente** 🍽️ 
 
 ## **Descripción del Proyecto**
 **ECOAPETITE** es la solución innovadora que transforma la manera en que los restaurantes gestionan sus excedentes y los consumidores acceden a comida de calidad a precios reducidos. A través de nuestra plataforma, los establecimientos pueden vender platillos frescos que no fueron vendidos en el transcurso de su comercialización, pero que aún están en óptimas condiciones, ofreciendo así una alternativa deliciosa, económica y sostenible para todos.
@@ -116,18 +116,13 @@ mvn spring-boot:run
 La aplicación se ejecutará en **http://localhost:8000**
 
 ---
----
 
 ## **📌 Enlace a la planificación del proyecto**
 Para más detalles sobre el desarrollo y la planificación, visita nuestro tablero en Azure DevOps:  
 🔗 [Planeación en Azure DevOps](https://dev.azure.com/IETI-2025/Ecoappetite/_sprints/taskboard/Ecoappetite%20Team/Ecoappetite/Sprint%201)
 
 ---
-
-🚀 **¡Gracias por ser parte de ECOAPETITE! Juntos podemos hacer la diferencia.** 🌍🍽️✨
-
----
-### 👨🏼‍💻👨‍💻 Autores
+### 👩🏼‍💻👨🏻‍💻 Autores
 
 - [Saray Alieth Mendivelso Gonzalez](https://github.com/saraygonm)
 - [Karol Daniela Ladino Ladinoz](https://github.com/20042000)
