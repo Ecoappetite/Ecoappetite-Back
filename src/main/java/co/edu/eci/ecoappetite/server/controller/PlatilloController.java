@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class PlatilloController {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> agregarPlatillo(@RequestBody PlatilloDTO platilloDTO) throws EcoappetiteException{
         platilloServicio.agregarPlatillo(platilloDTO);        
-        return ResponseEntity.status(201).body("Platillo :" + platilloDTO.getNombre() + " agregado");
+        return ResponseEntity.status(201).body("Platillo: " + platilloDTO.getNombre() + " agregado");
         
     }
     
@@ -59,5 +60,11 @@ public class PlatilloController {
     public ResponseEntity<String> modificarPlatillo(@PathVariable("id") String id, @RequestBody PlatilloDTO platilloDTO) throws EcoappetiteException{
         platilloServicio.modificarPlatillo(id, platilloDTO);
         return ResponseEntity.status(201).body("El Platillo: " + platilloDTO.getNombre() + " ha sido modificado");
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> eliminarPlatillo(@PathVariable("id") String id) throws EcoappetiteException{
+        platilloServicio.eliminarPlatillo(id);
+        return ResponseEntity.status(200).body("El platillo: " + id + " ha sido eliminado");
     }
 }

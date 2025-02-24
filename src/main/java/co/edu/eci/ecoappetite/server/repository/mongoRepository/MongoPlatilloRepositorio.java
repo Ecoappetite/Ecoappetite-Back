@@ -71,5 +71,10 @@ public class MongoPlatilloRepositorio implements PlatilloRepositorio {
         PlatilloEntidad platilloModificado = mongoPlatilloInterface.save(platilloEntidad);
         return platilloMapper.toDomain(platilloModificado);
     }
+
+    @Override
+    public void eliminarPlatillo(String id) throws EcoappetiteException{
+        mongoPlatilloInterface.deleteById(id);
+    }
     
 }
