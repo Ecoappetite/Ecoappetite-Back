@@ -28,7 +28,5 @@ public class RestauranteServicioImpl implements RestauranteServicio {
         Restaurante nuevoRestaurante = restauranteRepositorio.registrarRestaurante(restaurante);
         return restauranteMapper.toDTO(nuevoRestaurante);
     }
-
-
     
 }
