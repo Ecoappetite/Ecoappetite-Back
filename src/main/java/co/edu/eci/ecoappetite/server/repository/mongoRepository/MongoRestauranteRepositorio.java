@@ -6,43 +6,26 @@ import org.springframework.stereotype.Repository;
 import co.edu.eci.ecoappetite.server.domain.entity.RestauranteEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
+import co.edu.eci.ecoappetite.server.mapper.RestauranteMapper;
 import co.edu.eci.ecoappetite.server.repository.RestauranteRepositorio;
 
 @Repository
 public class MongoRestauranteRepositorio implements RestauranteRepositorio{
 
     private MongoRestauranteInterface mongoRestauranteInterface;
+    private RestauranteMapper restauranteMapper;
 
     @Autowired
-    public MongoRestauranteRepositorio(MongoRestauranteInterface mongoRestauranteInterface){
+    public MongoRestauranteRepositorio(MongoRestauranteInterface mongoRestauranteInterface, RestauranteMapper restauranteMapper){
         this.mongoRestauranteInterface = mongoRestauranteInterface;
-
+        this.restauranteMapper = restauranteMapper;
     }
 
     @Override
     public Restaurante registrarRestaurante(Restaurante restaurante) throws EcoappetiteException {
-        RestauranteEntidad restauranteEntidad = new RestauranteEntidad();
-        restauranteEntidad.setNit(restaurante.getNit());
-        restauranteEntidad.setNombre(restaurante.getNombre());
-        restauranteEntidad.setDireccion(restaurante.getDireccion());
-        restauranteEntidad.setTelefono(restaurante.getTelefono());
-        restauranteEntidad.setWhatsapp(restaurante.getWhatsapp());
-        restauranteEntidad.setCategoria(restaurante.getCategoria());
-        restauranteEntidad.setImagen(restaurante.getImagen());
-        restauranteEntidad.setDescripcion(restaurante.getDescripcion());
-        
-        RestauranteEntidad restauranteResultado = mongoRestauranteInterface.save(restauranteEntidad);
-
-        return new Restaurante(
-            restauranteResultado.getNit(),
-            restauranteResultado.getNombre(),
-            restauranteResultado.getDireccion(),
-            restauranteResultado.getTelefono(),
-            restauranteResultado.getWhatsapp(),
-            restauranteResultado.getCategoria(),
-            restauranteResultado.getImagen(),
-            restauranteResultado.getDescripcion()
-        );
+        RestauranteEntidad restauranteEntidad = restauranteMapper.toEntity(restaurante);
+        RestauranteEntidad restauranteRegistrado = mongoRestauranteInterface.save(restauranteEntidad);
+        return restauranteMapper.toDomain(restauranteRegistrado);
     }
     
 }
