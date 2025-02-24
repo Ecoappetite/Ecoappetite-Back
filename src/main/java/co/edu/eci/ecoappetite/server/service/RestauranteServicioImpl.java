@@ -58,5 +58,10 @@ public class RestauranteServicioImpl implements RestauranteServicio {
         Restaurante restauranteModificado = restauranteRepositorio.modificarRestaurante(id, restaurante);
         return restauranteMapper.toDTO(restauranteModificado);
     }
+
+    @Override
+    public void eliminarRestaurante(String id) throws EcoappetiteException {
+        restauranteRepositorio.eliminarRestaurante(id);        
+    }
     
 }

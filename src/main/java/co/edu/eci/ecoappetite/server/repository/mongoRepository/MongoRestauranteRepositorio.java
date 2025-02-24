@@ -71,5 +71,10 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
 
         return restauranteMapper.toDomain(restauranteModificado);
     }
+
+    @Override
+    public void eliminarRestaurante(String id) throws EcoappetiteException {
+        mongoRestauranteInterface.deleteById(id);
+    }
     
 }
