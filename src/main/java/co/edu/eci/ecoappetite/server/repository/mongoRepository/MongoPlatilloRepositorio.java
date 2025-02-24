@@ -43,7 +43,7 @@ public class MongoPlatilloRepositorio implements PlatilloRepositorio {
     @Override
     public Platillo consultarPlatilloPorId(String id) throws EcoappetiteException {
         PlatilloEntidad platilloEntidad = mongoPlatilloInterface.findById(id)
-                .orElseThrow(() -> new EcoappetiteException("Platillo no encontrado"));
+                .orElseThrow(() -> new EcoappetiteException("EL Platillo no ha sido encontrado"));
 
         return platilloMapper.toDomain(platilloEntidad);                     
     }
@@ -54,6 +54,22 @@ public class MongoPlatilloRepositorio implements PlatilloRepositorio {
                 .stream()
                 .map(platilloMapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Platillo modificarPlatillo(String id, Platillo platillo) throws EcoappetiteException {
+        PlatilloEntidad platilloEntidad = mongoPlatilloInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("El Platillo no ha sido encontrado"));
+        
+        platilloEntidad.setNombre(platillo.getNombre());
+        platilloEntidad.setPrecioOriginal(platillo.getPrecioOriginal());
+        platilloEntidad.setPrecioDescuento(platillo.getPrecioDescuento());
+        platilloEntidad.setCantidadDisponible(platillo.getCantidadDisponible());
+        platilloEntidad.setImagen(platillo.getImagen());
+        platilloEntidad.setDescripcion(platillo.getDescripcion());
+
+        PlatilloEntidad platilloModificado = mongoPlatilloInterface.save(platilloEntidad);
+        return platilloMapper.toDomain(platilloModificado);
     }
     
 }
