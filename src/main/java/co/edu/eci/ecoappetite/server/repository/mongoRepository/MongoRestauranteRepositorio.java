@@ -1,12 +1,14 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import co.edu.eci.ecoappetite.server.domain.entity.RestauranteEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.repository.RestauranteRepositorio;
 
+@Repository
 public class MongoRestauranteRepositorio implements RestauranteRepositorio{
 
     private MongoRestauranteInterface mongoRestauranteInterface;

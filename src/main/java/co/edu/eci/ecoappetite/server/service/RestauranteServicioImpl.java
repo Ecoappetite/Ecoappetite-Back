@@ -17,7 +17,5 @@ public class RestauranteServicioImpl implements RestauranteServicio {
     public Restaurante registrarRestaurante(Restaurante restaurante) throws EcoappetiteException {
         return restauranteRepositorio.registrarRestaurante(restaurante);
     }
-
-
     
 }
