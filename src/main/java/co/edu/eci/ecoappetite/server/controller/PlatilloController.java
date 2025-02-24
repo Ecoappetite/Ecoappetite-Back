@@ -47,4 +47,10 @@ public class PlatilloController {
         var platillo = platilloServicio.consultarPlatilloPorId(id);
         return ResponseEntity.status(200).body(platillo);
     }
+
+    @GetMapping(value = "/{nombre}")
+    public ResponseEntity<List<PlatilloDTO>> consultarPlatilloPorNombre(@PathVariable("nombre") String nombre) throws EcoappetiteException{
+        var platillo = platilloServicio.consultarPlatilloPorNombre(nombre);
+        return ResponseEntity.status(200).body(platillo);
+    }
 }
