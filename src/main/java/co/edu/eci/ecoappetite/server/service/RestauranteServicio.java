@@ -11,5 +11,6 @@ public interface RestauranteServicio {
     List<RestauranteDTO> consultarTodosLosRestaurantes();
     RestauranteDTO consultarRestaurantePorId(String id) throws EcoappetiteException;
     RestauranteDTO consultarRestaurantePorNombre(String nombre) throws EcoappetiteException;
+    RestauranteDTO modificarRestaurante(String id, RestauranteDTO restauranteDTO) throws EcoappetiteException;
     
 }
