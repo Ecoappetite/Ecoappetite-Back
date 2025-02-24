@@ -1,5 +1,8 @@
 package co.edu.eci.ecoappetite.server.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +27,17 @@ public class PlatilloServicioImpl implements PlatilloServicio{
 
     @Override
     public PlatilloDTO agregarPlatillo(PlatilloDTO platilloDTO) throws EcoappetiteException {
-        System.out.println(platilloDTO);
         Platillo platillo = platilloMapper.toDomain(platilloDTO);
-        System.out.println(platillo);
         Platillo nuevoPlatillo = platilloRepositorio.agregarPlatillo(platillo);
         return platilloMapper.toDTO(nuevoPlatillo);
+    }
+
+    @Override
+    public List<PlatilloDTO> consultarTodosLosPlatillos() {
+        return platilloRepositorio.consultarTodosLosPlatillosos()
+                .stream()
+                .map(platilloMapper::toDTO)
+                .collect(Collectors.toList());
     }
     
 }
