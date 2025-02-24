@@ -1,5 +1,8 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +29,15 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
         RestauranteEntidad restauranteEntidad = restauranteMapper.toEntity(restaurante);
         RestauranteEntidad restauranteRegistrado = mongoRestauranteInterface.save(restauranteEntidad);
         return restauranteMapper.toDomain(restauranteRegistrado);
+    }
+
+    @Override
+    public List<Restaurante> consultarTodosLosRestaurantes() {
+        return mongoRestauranteInterface.findAll()
+                .stream()
+                .map(restauranteMapper::toDomain)
+                .collect(Collectors.toList());
+      
     }
     
 }

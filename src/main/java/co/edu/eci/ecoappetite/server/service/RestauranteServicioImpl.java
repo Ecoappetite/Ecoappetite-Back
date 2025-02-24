@@ -1,5 +1,8 @@
 package co.edu.eci.ecoappetite.server.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,14 @@ public class RestauranteServicioImpl implements RestauranteServicio {
         Restaurante restaurante = restauranteMapper.toDomain(restauranteDTO);
         Restaurante nuevoRestaurante = restauranteRepositorio.registrarRestaurante(restaurante);
         return restauranteMapper.toDTO(nuevoRestaurante);
+    }
+
+    @Override
+    public List<RestauranteDTO> consultarTodosLosRestaurantes() {
+        return restauranteRepositorio.consultarTodosLosRestaurantes()
+                .stream()
+                .map(restauranteMapper::toDTO)
+                .collect(Collectors.toList());
     }
     
 }
