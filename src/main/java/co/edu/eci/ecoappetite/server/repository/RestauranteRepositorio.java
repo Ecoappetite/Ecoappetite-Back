@@ -9,5 +9,6 @@ public interface RestauranteRepositorio {
     Restaurante registrarRestaurante(Restaurante restaurante) throws EcoappetiteException;
     List<Restaurante> consultarTodosLosRestaurantes();
     Restaurante consultarRestaurantePorId(String id) throws EcoappetiteException;
+    Restaurante consultarRestaurantePorNombre(String nombre) throws EcoappetiteException;
     
 }

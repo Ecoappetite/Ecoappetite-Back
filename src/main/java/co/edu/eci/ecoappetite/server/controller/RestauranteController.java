@@ -47,6 +47,12 @@ public class RestauranteController {
         return ResponseEntity.status(200).body(restaurante);
     }
 
+    @GetMapping(value = "/nombre/{nombre}")
+    public ResponseEntity<RestauranteDTO> consultarRestaurantePorNombre(@PathVariable("nombre") String nombre) throws EcoappetiteException{
+        var restaurante = restauranteServicio.consultarRestaurantePorNombre(nombre);
+        return ResponseEntity.status(200).body(restaurante);
+    }
+
 
 
     

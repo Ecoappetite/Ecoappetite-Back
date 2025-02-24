@@ -43,8 +43,13 @@ public class RestauranteServicioImpl implements RestauranteServicio {
     @Override
     public RestauranteDTO consultarRestaurantePorId(String id) throws EcoappetiteException {
         Restaurante restaurante = restauranteRepositorio.consultarRestaurantePorId(id);
-        return restauranteMapper.toDTO(restaurante);
-       
+        return restauranteMapper.toDTO(restaurante);       
+    }
+
+    @Override
+    public RestauranteDTO consultarRestaurantePorNombre(String nombre) throws EcoappetiteException {
+        Restaurante restaurante = restauranteRepositorio.consultarRestaurantePorNombre(nombre);
+        return restauranteMapper.toDTO(restaurante);        
     }
     
 }
