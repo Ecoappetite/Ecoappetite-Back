@@ -42,13 +42,13 @@ public class PlatilloController {
         return ResponseEntity.status(200).body(platillos);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/id/{id}")
     public ResponseEntity<PlatilloDTO> consultarPlatilloPorId(@PathVariable("id") String id) throws EcoappetiteException{
         var platillo = platilloServicio.consultarPlatilloPorId(id);
         return ResponseEntity.status(200).body(platillo);
     }
 
-    @GetMapping(value = "/{nombre}")
+    @GetMapping(value = "/nombre/{nombre}")
     public ResponseEntity<List<PlatilloDTO>> consultarPlatilloPorNombre(@PathVariable("nombre") String nombre) throws EcoappetiteException{
         var platillo = platilloServicio.consultarPlatilloPorNombre(nombre);
         return ResponseEntity.status(200).body(platillo);
