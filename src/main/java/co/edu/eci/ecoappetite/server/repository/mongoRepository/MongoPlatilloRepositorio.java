@@ -1,5 +1,8 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +30,14 @@ public class MongoPlatilloRepositorio implements PlatilloRepositorio {
         PlatilloEntidad platilloEntidad = platilloMapper.toEntity(platillo);
         PlatilloEntidad platilloAgregado = mongoPlatilloInterface.save(platilloEntidad);
         return platilloMapper.toDomain(platilloAgregado);
+    }
+
+    @Override
+    public List<Platillo> consultarTodosLosPlatillosos() {
+        return mongoPlatilloInterface.findAll()
+                .stream()
+                .map(platilloMapper::toDomain)
+                .collect(Collectors.toList());
     }
     
 }
