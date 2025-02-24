@@ -39,5 +39,12 @@ public class RestauranteServicioImpl implements RestauranteServicio {
                 .map(restauranteMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public RestauranteDTO consultarRestaurantePorId(String id) throws EcoappetiteException {
+        Restaurante restaurante = restauranteRepositorio.consultarRestaurantePorId(id);
+        return restauranteMapper.toDTO(restaurante);
+       
+    }
     
 }
