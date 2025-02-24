@@ -1,7 +1,4 @@
-package co.edu.eci.ecoappetite.server.domain.entity;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package co.edu.eci.ecoappetite.server.domain.dto;
 
 import co.edu.eci.ecoappetite.server.domain.model.Categoria;
 import lombok.AllArgsConstructor;
@@ -11,10 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "restaurantes")
-public class RestauranteEntidad {
-
-    @Id
+public class RestauranteDTO {
+    
     private String nit;
     private String nombre;
     private String direccion;

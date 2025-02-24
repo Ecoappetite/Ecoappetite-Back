@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
+import co.edu.eci.ecoappetite.server.domain.dto.RestauranteDTO;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.service.RestauranteServicio;
 
@@ -25,9 +25,9 @@ public class RestauranteController {
     }
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> registrarRestaurante(@RequestBody Restaurante restaurante) throws EcoappetiteException{
-        restauranteServicio.registrarRestaurante(restaurante);        
-        return ResponseEntity.status(201).body("Restaurante :" + restaurante.getNombre() + " registrado");
+    public ResponseEntity<String> registrarRestaurante(@RequestBody RestauranteDTO restauranteDTO) throws EcoappetiteException{
+        restauranteServicio.registrarRestaurante(restauranteDTO);        
+        return ResponseEntity.status(201).body("Restaurante :" + restauranteDTO.getNombre() + " registrado");
         
     }
 
