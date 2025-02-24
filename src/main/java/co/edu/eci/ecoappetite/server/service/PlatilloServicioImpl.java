@@ -60,5 +60,10 @@ public class PlatilloServicioImpl implements PlatilloServicio{
         Platillo platilloModificado = platilloRepositorio.modificarPlatillo(id, platillo);
         return platilloMapper.toDTO(platilloModificado); 
     }
+
+    @Override
+    public void eliminarPlatillo(String id) throws EcoappetiteException{
+        platilloRepositorio.eliminarPlatillo(id);
+    }
     
 }

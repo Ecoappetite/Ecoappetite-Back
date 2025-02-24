@@ -12,4 +12,5 @@ public interface PlatilloServicio {
     PlatilloDTO consultarPlatilloPorId(String id) throws EcoappetiteException;
     List<PlatilloDTO> consultarPlatilloPorNombre(String nombre) throws EcoappetiteException;
     PlatilloDTO modificarPlatillo(String id, PlatilloDTO platilloDTO) throws EcoappetiteException;
+    void eliminarPlatillo(String id) throws EcoappetiteException;
 }
