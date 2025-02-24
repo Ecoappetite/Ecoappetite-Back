@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,13 @@ public class RestauranteController {
     public ResponseEntity<String> modificarRestaurante(@PathVariable("id") String id, @RequestBody RestauranteDTO restauranteDTO) throws EcoappetiteException{
         restauranteServicio.modificarRestaurante(id, restauranteDTO);
         return ResponseEntity.status(201).body("El restaurante: "+ restauranteDTO.getNombre() + " ha sido modificado.");
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> eliminarRestaurante(@PathVariable("id") String id) throws EcoappetiteException{
+        restauranteServicio.eliminarRestaurante(id);
+        return ResponseEntity.status(200).body("El restaurante: "+ id + " ha sido eliminado.");
+
     }
 
 
