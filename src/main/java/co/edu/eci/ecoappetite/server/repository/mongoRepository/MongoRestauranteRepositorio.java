@@ -55,5 +55,21 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
         
         return restauranteMapper.toDomain(restauranteEntidad);
     }
+
+    @Override
+    public Restaurante modificarRestaurante(String id, Restaurante restaurante) throws EcoappetiteException {
+        RestauranteEntidad restauranteEntidad = mongoRestauranteInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("Este restaurante no fue encontrado"));
+
+        restauranteEntidad.setDireccion(restaurante.getDireccion());
+        restauranteEntidad.setTelefono(restaurante.getTelefono());
+        restauranteEntidad.setWhatsapp(restaurante.getWhatsapp());
+        restauranteEntidad.setImagen(restaurante.getImagen());
+        restauranteEntidad.setDescripcion(restaurante.getDescripcion());
+
+        RestauranteEntidad restauranteModificado = mongoRestauranteInterface.save(restauranteEntidad);
+
+        return restauranteMapper.toDomain(restauranteModificado);
+    }
     
 }
