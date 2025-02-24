@@ -39,5 +39,13 @@ public class MongoPlatilloRepositorio implements PlatilloRepositorio {
                 .map(platilloMapper::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Platillo consultarPlatilloPorId(String id) throws EcoappetiteException {
+        PlatilloEntidad platilloEntidad = mongoPlatilloInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("Platillo no encontrado"));
+
+        return platilloMapper.toDomain(platilloEntidad);                     
+    }
     
 }

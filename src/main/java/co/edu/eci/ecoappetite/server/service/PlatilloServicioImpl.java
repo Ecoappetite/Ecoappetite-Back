@@ -39,5 +39,11 @@ public class PlatilloServicioImpl implements PlatilloServicio{
                 .map(platilloMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public PlatilloDTO consultarPlatilloPorId(String id) throws EcoappetiteException {
+        Platillo platillo = platilloRepositorio.consultarPlatilloPorId(id);
+        return platilloMapper.toDTO(platillo);
+    }
     
 }

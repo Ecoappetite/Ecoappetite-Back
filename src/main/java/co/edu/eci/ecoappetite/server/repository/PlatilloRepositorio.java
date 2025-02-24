@@ -9,4 +9,5 @@ public interface PlatilloRepositorio {
 
     Platillo agregarPlatillo(Platillo platillo) throws EcoappetiteException;
     List<Platillo> consultarTodosLosPlatillosos();
+    Platillo consultarPlatilloPorId(String id) throws EcoappetiteException;
 }
