@@ -8,5 +8,6 @@ import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 public interface RestauranteRepositorio {
     Restaurante registrarRestaurante(Restaurante restaurante) throws EcoappetiteException;
     List<Restaurante> consultarTodosLosRestaurantes();
+    Restaurante consultarRestaurantePorId(String id) throws EcoappetiteException;
     
 }

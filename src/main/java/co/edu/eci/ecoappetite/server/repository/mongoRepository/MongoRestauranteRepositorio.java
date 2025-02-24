@@ -39,5 +39,14 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
                 .collect(Collectors.toList());
       
     }
+
+    @Override
+    public Restaurante consultarRestaurantePorId(String id) throws EcoappetiteException {
+        RestauranteEntidad restauranteEntidad = mongoRestauranteInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("Este restaurante no fue encontrado"));
+        
+        return restauranteMapper.toDomain(restauranteEntidad);
+
+    }
     
 }
