@@ -1,8 +1,11 @@
 package co.edu.eci.ecoappetite.server.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,13 @@ public class RestauranteController {
         return ResponseEntity.status(201).body("Restaurante :" + restauranteDTO.getNombre() + " registrado");
         
     }
+
+    @GetMapping(value = "")
+    public ResponseEntity<List<RestauranteDTO>> consultarTodosLosRestaurantes(){
+        var restaurantes = restauranteServicio.consultarTodosLosRestaurantes();
+        return ResponseEntity.status(200).body(restaurantes);
+    } 
+
 
 
     
