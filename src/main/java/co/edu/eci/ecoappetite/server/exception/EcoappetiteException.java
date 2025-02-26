@@ -5,5 +5,5 @@ public class EcoappetiteException extends Exception{
     public EcoappetiteException(String mensaje){
         super(mensaje);
     }
-    
+
 }

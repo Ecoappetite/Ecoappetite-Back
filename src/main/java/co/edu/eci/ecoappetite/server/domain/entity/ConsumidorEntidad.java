@@ -3,7 +3,6 @@ package co.edu.eci.ecoappetite.server.domain.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import co.edu.eci.ecoappetite.server.domain.model.Categoria;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,17 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "restaurantes")
-public class RestauranteEntidad {
+@Document(collection = "consumidores")
 
+public class ConsumidorEntidad {
+    //Clase que representa la coleccion de consumidores en MongoDB
     @Id
-    private String nit;
+    private String id;
     private String nombre;
-    private String direccion;
+    private String email;
     private String telefono;
-    private String whatsapp;
-    private Categoria categoria;
-    private String imagen;
-    private String descripcion;
-    
+    private String direccion;
+    private String preferencias; //JSON o lista de categorías
+
 }
