@@ -1,6 +1,7 @@
 package co.edu.eci.ecoappetite.server.controller;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
+import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.service.ConsumidorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class ConsumidorController {
     public ResponseEntity<String> resgistrarConsumidor(@RequestBody ConsumidorDTO consumidorDTO) throws EcoappetiteException {
         consumidorServicio.registrarConsumidor(consumidorDTO);
         return ResponseEntity.status(201).body("Consumidor registrado con éxito");
+    }
+    @GetMapping(value = "/id/{id}")
+    public ResponseEntity<ConsumidorDTO> consultarConsumidorPorId(@PathVariable("id") String id) throws EcoappetiteException{
+        var consumidor = consumidorServicio.consultarConsumidorPorId(id);
+        return ResponseEntity.status(200).body(consumidor);
     }
 
 }
