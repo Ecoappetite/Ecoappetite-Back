@@ -8,6 +8,7 @@ import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
 
 @Mapper(componentModel = "spring")
 public interface ConsumidorMapper {
+    //Convierte entre DTO, entidad y modelo.
     Consumidor toDomain(ConsumidorDTO consumidorDTO);
     ConsumidorEntidad toEntity(Consumidor consumidor);
     Consumidor toDomain(ConsumidorEntidad consumidorEntidad);
