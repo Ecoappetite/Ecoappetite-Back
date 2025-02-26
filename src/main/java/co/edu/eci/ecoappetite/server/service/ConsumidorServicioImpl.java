@@ -2,6 +2,7 @@ package co.edu.eci.ecoappetite.server.service;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
 import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
+import co.edu.eci.ecoappetite.server.domain.model.Platillo;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.ConsumidorMapper;
 import co.edu.eci.ecoappetite.server.repository.ConsumidorRepositorio;
@@ -25,5 +26,11 @@ public class ConsumidorServicioImpl implements ConsumidorServicio {
         Consumidor consumidor = consumidorMapper.toDomain(consumidorDTO);
         Consumidor nuevoConsumidor = consumidorRepositorio.registrarConsumidor(consumidor);
         return consumidorMapper.toDTO(nuevoConsumidor);
+    }
+
+    @Override
+    public ConsumidorDTO consultarConsumidorPorId(String id) throws EcoappetiteException {
+        Consumidor consumidor = consumidorRepositorio.consulatrConsumidorPorId(id);
+        return consumidorMapper.toDTO(consumidor);
     }
 }

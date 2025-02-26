@@ -5,4 +5,5 @@ import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 
 public interface ConsumidorRepositorio {
     Consumidor registrarConsumidor(Consumidor consumidor) throws EcoappetiteException;
+    Consumidor consulatrConsumidorPorId(String id) throws EcoappetiteException;
 }

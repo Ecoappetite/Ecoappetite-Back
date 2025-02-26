@@ -13,4 +13,5 @@ public interface ConsumidorMapper {
     ConsumidorEntidad toEntity(Consumidor consumidor);
     Consumidor toDomain(ConsumidorEntidad consumidorEntidad);
     ConsumidorDTO toDTO(Consumidor consumidor);
+
 }
