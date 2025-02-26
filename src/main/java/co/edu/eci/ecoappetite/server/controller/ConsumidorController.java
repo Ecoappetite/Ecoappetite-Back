@@ -25,5 +25,11 @@ public class ConsumidorController {
         return ResponseEntity.status(200).body(consumidor);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<String> modificarConsumidor(@PathVariable("id") String id, @RequestBody ConsumidorDTO consumidorDTO) throws EcoappetiteException{
+        consumidorServicio.modificarConsumidor(id, consumidorDTO);
+        return ResponseEntity.status(201).body("El consumidor: " + consumidorDTO.getNombre() + " ha sido modificado");
+    }
+
 }
 

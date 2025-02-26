@@ -1,5 +1,6 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
+import co.edu.eci.ecoappetite.server.domain.entity.PlatilloEntidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +28,28 @@ public class MongoConsumidorRepositorio implements ConsumidorRepositorio {
         ConsumidorEntidad consumidorEntidad = consumidorMapper.toEntity(consumidor);
         ConsumidorEntidad consumidorRegistrado = mongoConsumidorInterface.save(consumidorEntidad);
         return consumidorMapper.toDomain(consumidorRegistrado);
+    }
+
+    @Override
+    public Consumidor consulatrConsumidorPorId(String id) throws EcoappetiteException {
+        ConsumidorEntidad consumidorEntidad = mongoConsumidorInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("EL consumidor no ha sido encontrado"));
+
+        return consumidorMapper.toDomain(consumidorEntidad);
+    }
+
+    @Override
+    public Consumidor modificarConsumidor(String id, Consumidor consumidor) throws EcoappetiteException {
+        ConsumidorEntidad consumidorEntidad = mongoConsumidorInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("EL consumidor no ha sido encontrado"));
+
+        consumidorEntidad.setNombre(consumidor.getNombre());
+        consumidorEntidad.setEmail(consumidor.getEmail());
+        consumidorEntidad.setTelefono(consumidor.getTelefono());
+        consumidorEntidad.setDireccion(consumidor.getDireccion());
+        consumidorEntidad.setPreferencias(consumidor.getPreferencias());
+
+        ConsumidorEntidad consumidorModificado = mongoConsumidorInterface.save(consumidorEntidad);
+        return consumidorMapper.toDomain(consumidorModificado);
     }
 }

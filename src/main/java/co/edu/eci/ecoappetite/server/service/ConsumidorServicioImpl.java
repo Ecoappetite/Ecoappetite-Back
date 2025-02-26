@@ -33,4 +33,13 @@ public class ConsumidorServicioImpl implements ConsumidorServicio {
         Consumidor consumidor = consumidorRepositorio.consulatrConsumidorPorId(id);
         return consumidorMapper.toDTO(consumidor);
     }
+
+    @Override
+    public ConsumidorDTO modificarConsumidor(String id, ConsumidorDTO consumidorDTO) throws EcoappetiteException {
+        Consumidor consumidor = consumidorMapper.toDomain(consumidorDTO);
+        Consumidor consumidorModificado= consumidorRepositorio.modificarConsumidor(id, consumidor);
+        return consumidorMapper.toDTO(consumidorModificado);
+
+    }
+
 }
