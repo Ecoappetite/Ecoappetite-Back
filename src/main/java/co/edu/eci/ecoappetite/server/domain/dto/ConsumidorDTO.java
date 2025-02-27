@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 
 public class ConsumidorDTO {
     //Clase que recibe y devuelve los datos
+
     private String id;
     private String nombre;
     private String email;
     private String telefono;
     private String direccion;
     private String preferencias;
-
 }

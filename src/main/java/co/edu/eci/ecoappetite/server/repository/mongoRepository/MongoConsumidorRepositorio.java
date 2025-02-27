@@ -1,9 +1,8 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
-import co.edu.eci.ecoappetite.server.domain.entity.PlatilloEntidad;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import co.edu.eci.ecoappetite.server.domain.entity.ConsumidorEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
@@ -52,4 +51,12 @@ public class MongoConsumidorRepositorio implements ConsumidorRepositorio {
         ConsumidorEntidad consumidorModificado = mongoConsumidorInterface.save(consumidorEntidad);
         return consumidorMapper.toDomain(consumidorModificado);
     }
+
+    @Override
+    public void eliminarConsumidor(String id) throws EcoappetiteException {
+        consumidorRepositorio.deleteById(id);
+    }
+
+
 }
+

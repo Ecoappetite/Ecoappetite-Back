@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 public class ConsumidorEntidad {
     //Clase que representa la coleccion de consumidores en MongoDB
+
     @Id
     private String id;
     private String nombre;
@@ -21,5 +22,5 @@ public class ConsumidorEntidad {
     private String telefono;
     private String direccion;
     private String preferencias; //JSON o lista de categorías
-
 }
+

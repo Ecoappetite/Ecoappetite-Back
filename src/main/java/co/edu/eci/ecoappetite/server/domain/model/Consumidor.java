@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Consumidor {
-    //El modelo represent el objeto de negocio en la app
+
     @NonNull
     private String id;
     @NonNull
@@ -18,6 +18,3 @@ public class Consumidor {
     private String direccion;
     private String preferencias;
 }
-
-
-

@@ -1,7 +1,6 @@
 package co.edu.eci.ecoappetite.server.controller;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
-import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.service.ConsumidorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/consumidor")
 public class ConsumidorController {
+
     @Autowired
     private ConsumidorServicio consumidorServicio;
 
@@ -40,8 +40,17 @@ public class ConsumidorController {
             return (ResponseEntity<String>) BadRequest.manejarErrores(e);
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarConsumidor(@PathVariable("id") String id) throws EcoappetiteException {
+        try{
+            consumidorServicio.eliminarConsumidor(id);
+            return ResponseEntity.status(200).body("El consumidor con ID " + id + " ha sido eliminado.");
+        }catch(Exception e){
+            return (ResponseEntity<String>) BadRequest.manejarErrores(e);
+        }
 
 
+    }
 
 
 }
