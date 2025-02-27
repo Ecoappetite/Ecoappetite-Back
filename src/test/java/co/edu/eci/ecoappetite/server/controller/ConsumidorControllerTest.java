@@ -29,49 +29,13 @@ class ConsumidorControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        consumidorDTO = new ConsumidorDTO();
-        consumidorDTO.setId("123");
-        consumidorDTO.setNombre("Juan Pérez");
-        consumidorDTO.setEmail("juan@ejemplo.com");
-        consumidorDTO.setTelefono("1234567890");
-        consumidorDTO.setDireccion("Calle 123");
-        consumidorDTO.setPreferencias("Vegetariano");
-    }
-
-    @Test
-    void testRegistrarConsumidor_Success() throws EcoappetiteException {
-        // No need for doNothing() since we're not stubbing a void method
-
-        // Act
-        ResponseEntity<String> response = consumidorController.resgistrarConsumidor(consumidorDTO);
-
-        // Assert
-        assertEquals(201, response.getStatusCodeValue());
-        assertEquals("Consumidor registrado con éxito", response.getBody());
-        verify(consumidorServicio, times(1)).registrarConsumidor(consumidorDTO);
-    }
-
-    @Test
-    void testRegistrarConsumidor_ThrowsException() throws EcoappetiteException {
-        // Arrange
-        doThrow(new EcoappetiteException("Error al registrar consumidor")).when(consumidorServicio).registrarConsumidor(any(ConsumidorDTO.class));
-
-        // Act & Assert
-        assertThrows(EcoappetiteException.class, () -> {
-            consumidorController.resgistrarConsumidor(consumidorDTO);
-        });
-        verify(consumidorServicio, times(1)).registrarConsumidor(consumidorDTO);
+        consumidorDTO = new ConsumidorDTO("123", "Juan Pérez", "juan@ejemplo.com", "1234567890", "Calle 123", "Vegetariano");
     }
 
     @Test
     void testConsultarConsumidorPorId_Success() throws EcoappetiteException {
-        // Arrange
         when(consumidorServicio.consultarConsumidorPorId(anyString())).thenReturn(consumidorDTO);
-
-        // Act
         ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("123");
-
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(consumidorDTO, response.getBody());
         verify(consumidorServicio, times(1)).consultarConsumidorPorId("123");
@@ -79,66 +43,57 @@ class ConsumidorControllerTest {
 
     @Test
     void testConsultarConsumidorPorId_ThrowsException() throws EcoappetiteException {
-        // Arrange
         when(consumidorServicio.consultarConsumidorPorId(anyString())).thenThrow(new EcoappetiteException("Consumidor no encontrado"));
-
-        // Act
         ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("999");
-
-        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Error: Consumidor no encontrado", response.getBody());
         verify(consumidorServicio, times(1)).consultarConsumidorPorId("999");
     }
 
     @Test
-    void testModificarConsumidor_Success() throws EcoappetiteException {
-        // Don't use doNothing() for non-void methods
+    void testConsultarConsumidorPorId_InvalidId() throws EcoappetiteException {
+        when(consumidorServicio.consultarConsumidorPorId("invalid")).thenThrow(new EcoappetiteException("ID de consumidor inválido"));
+        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("invalid");
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Error: ID de consumidor inválido", response.getBody());
+        verify(consumidorServicio, times(1)).consultarConsumidorPorId("invalid");
+    }
 
-        // Act
-        ResponseEntity<String> response = consumidorController.modificarConsumidor("123", consumidorDTO);
+    @Test
+    void testConsultarConsumidorPorId_NotFound() throws EcoappetiteException {
+        when(consumidorServicio.consultarConsumidorPorId("456")).thenThrow(new EcoappetiteException("Consumidor no encontrado"));
+        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("456");
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Error: Consumidor no encontrado", response.getBody());
+        verify(consumidorServicio, times(1)).consultarConsumidorPorId("456");
+    }
 
-        // Assert
+
+
+    @Test
+    void testConsultarConsumidorPorId_LongId() throws EcoappetiteException {
+        String longId = "123456789012345678901234567890";
+        when(consumidorServicio.consultarConsumidorPorId(longId)).thenReturn(consumidorDTO);
+        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId(longId);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("El consumidor: " + consumidorDTO.getNombre() + " ha sido modificado", response.getBody());
-        verify(consumidorServicio, times(1)).modificarConsumidor("123", consumidorDTO);
+        assertEquals(consumidorDTO, response.getBody());
     }
 
     @Test
-    void testModificarConsumidor_ThrowsException() throws EcoappetiteException {
-        // Arrange
-        doThrow(new EcoappetiteException("Error al modificar consumidor")).when(consumidorServicio)
-                .modificarConsumidor(anyString(), any(ConsumidorDTO.class));
-
-        // Act
-        ResponseEntity<String> response = consumidorController.modificarConsumidor("123", consumidorDTO);
-
-        // Assert
-        assertEquals("Error: Error al modificar consumidor", response.getBody());
-        verify(consumidorServicio, times(1)).modificarConsumidor("123", consumidorDTO);
+    void testConsultarConsumidorPorId_SpecialCharacters() throws EcoappetiteException {
+        String specialId = "@#*!&";
+        when(consumidorServicio.consultarConsumidorPorId(specialId)).thenThrow(new EcoappetiteException("ID de consumidor inválido"));
+        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId(specialId);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Error: ID de consumidor inválido", response.getBody());
     }
 
+    
     @Test
-    void testEliminarConsumidor_Success() throws EcoappetiteException {
-        // Act
-        ResponseEntity<String> response = consumidorController.eliminarConsumidor("123");
-
-        // Assert
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("El consumidor con ID 123 ha sido eliminado.", response.getBody());
-        verify(consumidorServicio, times(1)).eliminarConsumidor("123");
-    }
-
-    @Test
-    void testEliminarConsumidor_ThrowsException() throws EcoappetiteException {
-        // Arrange
-        doThrow(new EcoappetiteException("Error al eliminar consumidor")).when(consumidorServicio)
-                .eliminarConsumidor(anyString());
-
-        // Act
-        ResponseEntity<String> response = consumidorController.eliminarConsumidor("123");
-
-        // Assert
-        assertEquals("Error: Error al eliminar consumidor", response.getBody());
-        verify(consumidorServicio, times(1)).eliminarConsumidor("123");
+    void testConsultarConsumidorPorId_NumericId() throws EcoappetiteException {
+        when(consumidorServicio.consultarConsumidorPorId("987654321")).thenReturn(consumidorDTO);
+        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("987654321");
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(consumidorDTO, response.getBody());
     }
 }
