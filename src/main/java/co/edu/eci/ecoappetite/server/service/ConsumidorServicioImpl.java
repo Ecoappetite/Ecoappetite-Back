@@ -23,19 +23,13 @@ public class ConsumidorServicioImpl implements ConsumidorServicio {
 
     @Override
     public ConsumidorDTO registrarConsumidor(ConsumidorDTO consumidorDTO) throws EcoappetiteException {
-        // Convertimos DTO a Entidad
-        ConsumidorEntidad consumidorEntidad = consumidorMapper.toEntity(consumidorMapper.toDomain(consumidorDTO));
-        // Guardamos en la base de datos
-        ConsumidorEntidad nuevoConsumidor = consumidorRepositorio.registrarConsumidor(consumidorEntidad);
-        // Convertimos a DTO antes de retornar
-        return consumidorMapper.toDTO(consumidorMapper.toDomain(nuevoConsumidor));
+        Consumidor consumidorEntidad = consumidorMapper.toDomain(consumidorDTO);
+        Consumidor nuevoConsumidor = consumidorRepositorio.registrarConsumidor(consumidorEntidad);
+        return consumidorMapper.toDTO(nuevoConsumidor);
     }
 
     @Override
     public void eliminarConsumidor(String id) throws EcoappetiteException {
-        if (!consumidorRepositorio.existePorId(id)) {
-            throw new EcoappetiteException("El consumidor con ID " + id + " no existe.");
-        }
         consumidorRepositorio.eliminarConsumidor(id);
     }
 

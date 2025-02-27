@@ -54,7 +54,7 @@ public class MongoConsumidorRepositorio implements ConsumidorRepositorio {
 
     @Override
     public void eliminarConsumidor(String id) throws EcoappetiteException {
-        consumidorRepositorio.deleteById(id);
+        mongoConsumidorInterface.deleteById(id);
     }
 
 
