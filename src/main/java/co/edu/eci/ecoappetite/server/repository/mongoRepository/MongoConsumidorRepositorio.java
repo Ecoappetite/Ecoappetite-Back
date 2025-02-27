@@ -1,39 +1,62 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import co.edu.eci.ecoappetite.server.domain.entity.ConsumidorEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.ConsumidorMapper;
 import co.edu.eci.ecoappetite.server.repository.ConsumidorRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class MongoConsumidorRepositorio {
+@Repository
+public class MongoConsumidorRepositorio implements ConsumidorRepositorio {
 
-    private final ConsumidorRepositorio consumidorRepositorio;
+
+    private final MongoConsumidorInterface mongoConsumidorInterface;
     private final ConsumidorMapper consumidorMapper;
 
     @Autowired
-    public MongoConsumidorRepositorio(ConsumidorRepositorio consumidorRepositorio, ConsumidorMapper consumidorMapper) {
-        this.consumidorRepositorio = consumidorRepositorio;
+    public MongoConsumidorRepositorio(MongoConsumidorInterface mongoConsumidorInterface, ConsumidorMapper consumidorMapper) {
+        this.mongoConsumidorInterface = mongoConsumidorInterface;
         this.consumidorMapper = consumidorMapper;
     }
 
-    public Consumidor registrarConsumidor(Consumidor consumidor) {
+    @Override
+    public Consumidor registrarConsumidor(Consumidor consumidor) throws EcoappetiteException {
         ConsumidorEntidad consumidorEntidad = consumidorMapper.toEntity(consumidor);
-        ConsumidorEntidad consumidorGuardado = consumidorRepositorio.save(consumidorEntidad);
-        return consumidorMapper.toDomain(consumidorGuardado);
+        ConsumidorEntidad consumidorRegistrado = mongoConsumidorInterface.save(consumidorEntidad);
+        return consumidorMapper.toDomain(consumidorRegistrado);
     }
 
+    @Override
+    public Consumidor consulatrConsumidorPorId(String id) throws EcoappetiteException {
+        ConsumidorEntidad consumidorEntidad = mongoConsumidorInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("EL consumidor no ha sido encontrado"));
+
+        return consumidorMapper.toDomain(consumidorEntidad);
+    }
+
+    @Override
+    public Consumidor modificarConsumidor(String id, Consumidor consumidor) throws EcoappetiteException {
+        ConsumidorEntidad consumidorEntidad = mongoConsumidorInterface.findById(id)
+                .orElseThrow(() -> new EcoappetiteException("EL consumidor no ha sido encontrado"));
+
+        consumidorEntidad.setNombre(consumidor.getNombre());
+        consumidorEntidad.setEmail(consumidor.getEmail());
+        consumidorEntidad.setTelefono(consumidor.getTelefono());
+        consumidorEntidad.setDireccion(consumidor.getDireccion());
+        consumidorEntidad.setPreferencias(consumidor.getPreferencias());
+
+        ConsumidorEntidad consumidorModificado = mongoConsumidorInterface.save(consumidorEntidad);
+        return consumidorMapper.toDomain(consumidorModificado);
+    }
+
+    @Override
     public void eliminarConsumidor(String id) throws EcoappetiteException {
-        if (!consumidorRepositorio.existsById(id)) {
-            throw new EcoappetiteException("El consumidor con ID " + id + " no existe.");
-        }
-        consumidorRepositorio.deleteById(id);
+        mongoConsumidorInterface.deleteById(id);
     }
 
-    public boolean existePorId(String id) {
-        return consumidorRepositorio.existsById(id);
-    }
+
 }
+

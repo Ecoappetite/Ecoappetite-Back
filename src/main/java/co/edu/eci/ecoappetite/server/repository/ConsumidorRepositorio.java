@@ -1,24 +1,14 @@
 package co.edu.eci.ecoappetite.server.repository;
 
-import co.edu.eci.ecoappetite.server.domain.entity.ConsumidorEntidad;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ConsumidorRepositorio extends MongoRepository<ConsumidorEntidad, String> {
+import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
+import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 
-    // Verifica si un consumidor existe por su ID
-    default boolean existePorId(String id) {
-        return existsById(id);
-    }
 
-    // Guarda un nuevo consumidor en la base de datos
-    default ConsumidorEntidad registrarConsumidor(ConsumidorEntidad consumidor) {
-        return save(consumidor);
-    }
-
-    // Elimina un consumidor por ID
-    default void eliminarConsumidor(String id) {
-        deleteById(id);
-    }
+public interface ConsumidorRepositorio {
+    Consumidor registrarConsumidor(Consumidor consumidor) throws EcoappetiteException;
+    Consumidor consulatrConsumidorPorId(String id) throws EcoappetiteException;
+    Consumidor modificarConsumidor(String id, Consumidor consumidor) throws EcoappetiteException;
+     void eliminarConsumidor(String id) throws EcoappetiteException;
 }
+

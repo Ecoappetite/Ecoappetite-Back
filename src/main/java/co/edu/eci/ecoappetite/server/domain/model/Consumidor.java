@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Consumidor {
+
     @NonNull
     private String id;
     @NonNull
