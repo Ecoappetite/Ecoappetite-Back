@@ -1,0 +1,6 @@
+{
+  "MONGO_USER": "migueltelleza",
+  "MONGO_PASSWORD": "b26f0DbHXhfq8YDw",
+  "MONGO_CLUSTER": "ecoappetite.c9ab2.mongodb.net",
+  "MONGO_DB": "EcoappetiteDatabase"
+}
