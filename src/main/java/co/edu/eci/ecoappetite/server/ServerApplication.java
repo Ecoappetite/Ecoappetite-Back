@@ -7,6 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ServerApplication {
 
 	public static void main(String[] args) {
+
+		System.setProperty("MONGO_USER", ConfigLoader.get("MONGO_USER"));
+		System.setProperty("MONGO_PASSWORD", ConfigLoader.get("MONGO_PASSWORD"));
+		System.setProperty("MONGO_CLUSTER", ConfigLoader.get("MONGO_CLUSTER"));
+		System.setProperty("MONGO_DB", ConfigLoader.get("MONGO_DB"));
+
 		SpringApplication.run(ServerApplication.class, args);
 	}
 

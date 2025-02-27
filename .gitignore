@@ -34,3 +34,6 @@ build/
 
 # Ignorar archivo de variables de entorno
 .env
+
+# Ignorar archivo JSON de configuración
+config.json
