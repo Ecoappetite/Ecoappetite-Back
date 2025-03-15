@@ -30,7 +30,7 @@ class ConsumidorControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         consumidorDTO = new ConsumidorDTO();
-        consumidorDTO.setId("123");
+        consumidorDTO.setId("1234");
         consumidorDTO.setNombre("Juan Pérez");
         consumidorDTO.setEmail("juan@ejemplo.com");
         consumidorDTO.setTelefono("1234567890");
