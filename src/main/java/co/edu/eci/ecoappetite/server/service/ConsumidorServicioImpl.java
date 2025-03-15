@@ -1,9 +1,9 @@
 package co.edu.eci.ecoappetite.server.service;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
-import co.edu.eci.ecoappetite.server.domain.entity.ConsumidorEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
+import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.mapper.ConsumidorMapper;
 import co.edu.eci.ecoappetite.server.repository.ConsumidorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,8 @@ public class ConsumidorServicioImpl implements ConsumidorServicio {
     }
 
     @Override
-    public ConsumidorDTO consultarConsumidorPorId(String id) throws EcoappetiteException {
-        Consumidor consumidor = consumidorRepositorio.consulatrConsumidorPorId(id);
+    public ConsumidorDTO consultarConsumidorPorId(String id) throws NotFoundException {
+        Consumidor consumidor = consumidorRepositorio.consultarConsumidorPorId(id);
         return consumidorMapper.toDTO(consumidor);
     }
 

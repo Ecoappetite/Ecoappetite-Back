@@ -89,7 +89,7 @@ class ConsumidorServicioImplTest {
     @Test
     void testConsultarConsumidorPorId() throws EcoappetiteException {
         // Arrange
-        when(consumidorRepositorio.consulatrConsumidorPorId(anyString())).thenReturn(consumidor);
+        when(consumidorRepositorio.consultarConsumidorPorId(anyString())).thenReturn(consumidor);
         when(consumidorMapper.toDTO(any(Consumidor.class))).thenReturn(consumidorDTO);
 
         // Act
@@ -99,7 +99,7 @@ class ConsumidorServicioImplTest {
         assertNotNull(resultado);
         assertEquals("123", resultado.getId());
         assertEquals("Juan Pérez", resultado.getNombre());
-        verify(consumidorRepositorio).consulatrConsumidorPorId("123");
+        verify(consumidorRepositorio).consultarConsumidorPorId("123");
         verify(consumidorMapper).toDTO(consumidor);
     }
 

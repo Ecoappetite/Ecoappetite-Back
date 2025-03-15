@@ -1,7 +1,10 @@
 package co.edu.eci.ecoappetite.server.controller;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
+import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
+import co.edu.eci.ecoappetite.server.exception.MessageException;
+import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.service.ConsumidorServicio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,13 +83,11 @@ class ConsumidorControllerTest {
     @Test
     void testConsultarConsumidorPorId_ThrowsException() throws EcoappetiteException {
         // Arrange
-        when(consumidorServicio.consultarConsumidorPorId(anyString())).thenThrow(new EcoappetiteException("Consumidor no encontrado"));
+        when(consumidorServicio.consultarConsumidorPorId(anyString())).thenThrow(new NotFoundException(""));
 
         // Act
-        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("999");
+        assertThrows(NotFoundException.class, () -> consumidorController.consultarConsumidorPorId("999"));
 
-        // Assert
-        assertEquals("Error: Consumidor no encontrado", response.getBody());
         verify(consumidorServicio, times(1)).consultarConsumidorPorId("999");
     }
 
@@ -110,10 +111,8 @@ class ConsumidorControllerTest {
                 .modificarConsumidor(anyString(), any(ConsumidorDTO.class));
 
         // Act
-        ResponseEntity<String> response = consumidorController.modificarConsumidor("123", consumidorDTO);
+        assertThrows(EcoappetiteException.class, () -> consumidorController.modificarConsumidor("123", consumidorDTO));
 
-        // Assert
-        assertEquals("Error: Error al modificar consumidor", response.getBody());
         verify(consumidorServicio, times(1)).modificarConsumidor("123", consumidorDTO);
     }
 
@@ -131,14 +130,12 @@ class ConsumidorControllerTest {
     @Test
     void testEliminarConsumidor_ThrowsException() throws EcoappetiteException {
         // Arrange
-        doThrow(new EcoappetiteException("Error al eliminar consumidor")).when(consumidorServicio)
+        doThrow(new NotFoundException("")).when(consumidorServicio)
                 .eliminarConsumidor(anyString());
 
         // Act
-        ResponseEntity<String> response = consumidorController.eliminarConsumidor("123");
-
-        // Assert
-        assertEquals("Error: Error al eliminar consumidor", response.getBody());
+        assertThrows(EcoappetiteException.class, () -> consumidorController.eliminarConsumidor("123"));
+        
         verify(consumidorServicio, times(1)).eliminarConsumidor("123");
     }
 }
