@@ -32,7 +32,6 @@ public class CheckoutController {
         if (accessToken == null || accessToken.isEmpty()) {
             throw new IllegalStateException("ACCESS_TOKEN no está configurado correctamente.");
         }
-
         System.out.println("Usando Access Token: " + accessToken.substring(0, 5) + "...");
 
         // Inicializar MercadoPago
@@ -43,14 +42,19 @@ public class CheckoutController {
     @PostMapping("/create")
     public ResponseEntity<?> createPreference(@RequestBody OrderRequest orderRequest) {
         try {
+
+            // Re-initialize MercadoPago config before each request
+            String accessToken = ConfigLoader.get("ACCESS_TOKEN");
+            MercadoPagoConfig.setAccessToken(accessToken);
             if (orderRequest.getItems() == null || orderRequest.getItems().isEmpty()) {
                 return ResponseEntity.badRequest().body("Error: La orden debe contener al menos un item.");
             }
-
+	    
+	    System.out.println("hola");	
             // Crear preferencia
             PreferenceRequest preferenceRequest = buildPreferenceRequest(orderRequest);
             Preference preference = preferenceClient.create(preferenceRequest);
-
+            System.out.println("hola2"); 
             // Construir respuesta
             CheckoutResponse response = new CheckoutResponse();
             response.setPreferenceId(preference.getId());
@@ -91,7 +95,7 @@ public class CheckoutController {
         }
 
         // Configurar URLs
-        String baseUrl = "https://ecoappetite.ip-ddns.com:8080";
+        String baseUrl = "https://ecoappetite.ip-ddns.com";
         String complementUrl = "/api/payment";
 
         String successUrl = baseUrl + complementUrl + "/success";
