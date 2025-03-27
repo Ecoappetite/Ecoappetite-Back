@@ -1,10 +1,9 @@
 package co.edu.eci.ecoappetite.server.controller;
 
-import co.edu.eci.ecoappetite.server.model.User;
-import co.edu.eci.ecoappetite.server.service.AuthService;
 import co.edu.eci.ecoappetite.server.dto.LoginRequest;
 import co.edu.eci.ecoappetite.server.dto.RegisterRequest;
 import co.edu.eci.ecoappetite.server.dto.AuthResponse;
+import co.edu.eci.ecoappetite.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class AuthController {
 
     /**
      * Endpoint para el registro de un nuevo usuario.
-     * 
+     *
      * @param request Datos del usuario a registrar.
      * @return ResponseEntity con el usuario creado.
      */
@@ -35,10 +34,14 @@ public class AuthController {
 
     /**
      * Endpoint para el inicio de sesión de un usuario.
-     * 
+     *
      * @param request Datos del usuario para autenticarse.
      * @return ResponseEntity con el token de autenticación.
      */
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        AuthResponse response = authService.login(re
+        AuthResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
+    }
+}
+
