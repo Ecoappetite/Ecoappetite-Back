@@ -29,7 +29,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         AuthResponse response = authService.register(request);
-        return ResponseEntity.created(URI.create("/auth/signup")).body(response);
+        return ResponseEntity.created(URI.create("/auth/signup")).body(response); // Crea un registro del Token cuando el  usuario finaliza la sesión
     }
 
     /**
@@ -38,7 +38,7 @@ public class AuthController {
      * @param request Datos del usuario para autenticarse.
      * @return ResponseEntity con el token de autenticación.
      */
-    @PostMapping("/login")
+    @PostMapping("/login") // Genera el Token y valida la firma electronica de cada token
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
