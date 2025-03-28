@@ -27,6 +27,7 @@ public class RestauranteServicioImpl implements RestauranteServicio {
     @Override
     public RestauranteDTO registrarRestaurante(RestauranteDTO restauranteDTO) throws EcoappetiteException {
         Restaurante restaurante = restauranteMapper.toDomain(restauranteDTO);
+        RestauranteDataValidator.validar(restaurante);
         Restaurante nuevoRestaurante = restauranteRepositorio.registrarRestaurante(restaurante);
         return restauranteMapper.toDTO(nuevoRestaurante);
     }
@@ -54,6 +55,7 @@ public class RestauranteServicioImpl implements RestauranteServicio {
     @Override
     public RestauranteDTO modificarRestaurante(String id, RestauranteDTO restauranteDTO) throws EcoappetiteException {
         Restaurante restaurante = restauranteMapper.toDomain(restauranteDTO);
+        RestauranteDataValidator.validar(restaurante);
         Restaurante restauranteModificado = restauranteRepositorio.modificarRestaurante(id, restaurante);
         return restauranteMapper.toDTO(restauranteModificado);
     }

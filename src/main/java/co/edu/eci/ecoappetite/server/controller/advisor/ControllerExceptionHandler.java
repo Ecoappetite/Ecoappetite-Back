@@ -1,11 +1,12 @@
 package co.edu.eci.ecoappetite.server.controller.advisor;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import org.springframework.dao.DuplicateKeyException;
 
 import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import co.edu.eci.ecoappetite.server.exception.MessageException;
@@ -41,5 +42,11 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(MessageException.DATA_VALIDATION_ERROR.getMessage() + ": " + nullPointerException.getMessage());
     }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<String> handlerException(DuplicateKeyException duplicateKeyException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MessageException.DATA_VALIDATION_ERROR.getMessage() + ": " + duplicateKeyException.getMessage());
+    }
+
 
 }
