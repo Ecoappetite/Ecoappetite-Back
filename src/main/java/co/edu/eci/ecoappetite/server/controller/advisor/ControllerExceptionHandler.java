@@ -18,7 +18,6 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handlerException(Exception exception){
-        exception.printStackTrace();
         return ResponseEntity.internalServerError().body(MessageException.GENERAL_ERROR.getMessage());
     } 
     
