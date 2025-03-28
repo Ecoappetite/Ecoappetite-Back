@@ -3,16 +3,13 @@ package co.edu.eci.ecoappetite.server.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.domain.model.Platillo;
-import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.PlatilloMapper;
 import co.edu.eci.ecoappetite.server.repository.PlatilloRepositorio;
-import co.edu.eci.ecoappetite.server.repository.RestauranteRepositorio;
 import lombok.RequiredArgsConstructor;
 
 
@@ -56,6 +53,7 @@ public class PlatilloServicioImpl implements PlatilloServicio{
     @Override
     public PlatilloDTO modificarPlatillo(String id, PlatilloDTO platilloDTO) throws EcoappetiteException {
         Platillo platillo = platilloMapper.toDomain(platilloDTO);
+        PlatilloDataValidator.validar(platillo);
         Platillo platilloModificado = platilloRepositorio.modificarPlatillo(id, platillo);
         return platilloMapper.toDTO(platilloModificado); 
     }

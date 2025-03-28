@@ -11,6 +11,7 @@ import co.edu.eci.ecoappetite.server.domain.entity.RestauranteEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Platillo;
 import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
+import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.mapper.PlatilloMapper;
 import co.edu.eci.ecoappetite.server.mapper.RestauranteMapper;
 import co.edu.eci.ecoappetite.server.repository.RestauranteRepositorio;
@@ -43,7 +44,7 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
     @Override
     public Restaurante consultarRestaurantePorId(String id) throws EcoappetiteException {
         RestauranteEntidad restauranteEntidad = mongoRestauranteInterface.findById(id)
-                .orElseThrow(() -> new EcoappetiteException("Este restaurante no fue encontrado"));
+                .orElseThrow(() -> new NotFoundException("Este restaurante no fue encontrado"));
         
         return restauranteMapper.toDomain(restauranteEntidad);
     }
@@ -51,7 +52,7 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
     @Override
     public Restaurante consultarRestaurantePorNombre(String nombre) throws EcoappetiteException {
         RestauranteEntidad restauranteEntidad = mongoRestauranteInterface.findByNombre(nombre)
-                .orElseThrow(() -> new EcoappetiteException("Este restaurante no fue encontrado"));
+                .orElseThrow(() -> new NotFoundException("Este restaurante no fue encontrado"));
         
         return restauranteMapper.toDomain(restauranteEntidad);
     }
@@ -59,7 +60,7 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
     @Override
     public Restaurante modificarRestaurante(String id, Restaurante restaurante) throws EcoappetiteException {
         RestauranteEntidad restauranteEntidad = mongoRestauranteInterface.findById(id)
-                .orElseThrow(() -> new EcoappetiteException("Este restaurante no fue encontrado"));
+                .orElseThrow(() -> new NotFoundException("Este restaurante no fue encontrado"));
 
         restauranteEntidad.setDireccion(restaurante.getDireccion());
         restauranteEntidad.setTelefono(restaurante.getTelefono());
@@ -80,7 +81,7 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
     @Override
     public Restaurante agregarPlatilloRestaurante(String nombre, Platillo platillo) throws EcoappetiteException {
         RestauranteEntidad restauranteEntidad = mongoRestauranteInterface.findByNombre(nombre)
-        .orElseThrow(() -> new EcoappetiteException("Este restaurante no fue encontrado"));
+        .orElseThrow(() -> new NotFoundException("Este restaurante no fue encontrado"));
         PlatilloEntidad platilloEntidad = platilloMapper.toEntity(platillo);
         restauranteEntidad.getPlatillos().add(platilloEntidad);
         RestauranteEntidad nuevoRestaurante = mongoRestauranteInterface.save(restauranteEntidad);
