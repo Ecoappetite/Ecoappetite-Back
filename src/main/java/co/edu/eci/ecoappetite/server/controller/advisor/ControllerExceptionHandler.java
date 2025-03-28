@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import co.edu.eci.ecoappetite.server.exception.MessageException;
 
 import co.edu.eci.ecoappetite.server.exception.NotFoundException;
@@ -16,6 +17,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handlerException(Exception exception){
+        exception.printStackTrace();
         return ResponseEntity.internalServerError().body(MessageException.GENERAL_ERROR.getMessage());
     } 
     
@@ -27,6 +29,17 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<String> handlerException(NoResourceFoundException noResourceFoundException){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(noResourceFoundException.getMessage());
+    }
+
+    @ExceptionHandler(DataValidationException.class)
+    public ResponseEntity<String> handlerException(DataValidationException dataValidationException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MessageException.DATA_VALIDATION_ERROR.getMessage() + ": " + dataValidationException.getMessage());
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<String> handlerException(NullPointerException nullPointerException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(MessageException.DATA_VALIDATION_ERROR.getMessage() + ": " + nullPointerException.getMessage());
     }
 
 }

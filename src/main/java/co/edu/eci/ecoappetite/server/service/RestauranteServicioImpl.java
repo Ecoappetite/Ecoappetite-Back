@@ -3,27 +3,26 @@ package co.edu.eci.ecoappetite.server.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.domain.dto.RestauranteDTO;
+import co.edu.eci.ecoappetite.server.domain.model.Platillo;
 import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
+import co.edu.eci.ecoappetite.server.mapper.PlatilloMapper;
 import co.edu.eci.ecoappetite.server.mapper.RestauranteMapper;
 import co.edu.eci.ecoappetite.server.repository.RestauranteRepositorio;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RestauranteServicioImpl implements RestauranteServicio {
 
     private final RestauranteRepositorio restauranteRepositorio;
     private final RestauranteMapper restauranteMapper;
-
-    @Autowired
-    public RestauranteServicioImpl(RestauranteRepositorio restauranteRepositorio, RestauranteMapper restauranteMapper){
-        this.restauranteRepositorio = restauranteRepositorio;
-        this.restauranteMapper = restauranteMapper;
-
-    }
+    private final PlatilloMapper platilloMapper;
+    private final PlatilloServicio platilloServicio;
 
     @Override
     public RestauranteDTO registrarRestaurante(RestauranteDTO restauranteDTO) throws EcoappetiteException {
@@ -62,6 +61,14 @@ public class RestauranteServicioImpl implements RestauranteServicio {
     @Override
     public void eliminarRestaurante(String id) throws EcoappetiteException {
         restauranteRepositorio.eliminarRestaurante(id);        
+    }
+
+    @Override
+    public void agregarPlatilloRestaurante(String nit, PlatilloDTO platilloDTO) throws EcoappetiteException {
+        Platillo platillo = platilloMapper.toDomain(platilloDTO);
+        if(restauranteRepositorio.existePlatillo(nit, platillo)) throw new EcoappetiteException("El platillo " + platillo.getNombre() + " ya fue agregado al restaurante");
+        PlatilloDTO platilloDTOGuardado = platilloServicio.agregarPlatillo(platilloDTO);
+        restauranteRepositorio.agregarPlatilloRestaurante(nit,platilloMapper.toDomain(platilloDTOGuardado));
     }
     
 }

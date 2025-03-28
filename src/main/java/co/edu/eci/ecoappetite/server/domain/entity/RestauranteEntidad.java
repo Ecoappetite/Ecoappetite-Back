@@ -1,9 +1,12 @@
 package co.edu.eci.ecoappetite.server.domain.entity;
 
+import java.util.Collection;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import co.edu.eci.ecoappetite.server.domain.model.Categoria;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +26,6 @@ public class RestauranteEntidad {
     private Categoria categoria;
     private String imagen;
     private String descripcion;
+    private Collection<PlatilloEntidad> platillos;
     
 }

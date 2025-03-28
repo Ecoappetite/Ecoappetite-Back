@@ -8,26 +8,25 @@ import org.springframework.stereotype.Service;
 
 import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.domain.model.Platillo;
+import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.PlatilloMapper;
 import co.edu.eci.ecoappetite.server.repository.PlatilloRepositorio;
+import co.edu.eci.ecoappetite.server.repository.RestauranteRepositorio;
+import lombok.RequiredArgsConstructor;
 
 
 @Service
+@RequiredArgsConstructor
 public class PlatilloServicioImpl implements PlatilloServicio{
 
     private final PlatilloRepositorio platilloRepositorio;
     private final PlatilloMapper platilloMapper;
 
-    @Autowired
-    public PlatilloServicioImpl(PlatilloRepositorio platilloRepositorio, PlatilloMapper platilloMapper){
-        this.platilloRepositorio = platilloRepositorio;
-        this.platilloMapper = platilloMapper;
-    }
-
     @Override
     public PlatilloDTO agregarPlatillo(PlatilloDTO platilloDTO) throws EcoappetiteException {
         Platillo platillo = platilloMapper.toDomain(platilloDTO);
+        PlatilloDataValidator.validar(platillo);
         Platillo nuevoPlatillo = platilloRepositorio.agregarPlatillo(platillo);
         return platilloMapper.toDTO(nuevoPlatillo);
     }

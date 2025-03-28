@@ -80,10 +80,7 @@ public class PlatilloServicioTest {
 
     @Test
     void agregarPlatillo_conCampoNulo_deberiaLanzarExcepcion() {
-        PlatilloDTO platilloInvalido = new PlatilloDTO("1", null, 20000.0, 18000.0, CategoriaPlatillo.PLATO_FUERTE, EstadoPlatillo.DISPONIBLE, 10, "imagen.jpg", "Pizza de queso", "123456");
-        when(platilloMapper.toDomain(platilloInvalido)).thenThrow(IllegalArgumentException.class);
-        
-        assertThrows(IllegalArgumentException.class, () -> platilloServicio.agregarPlatillo(platilloInvalido));
+        assertThrows(NullPointerException.class, () -> new PlatilloDTO("1", null, 20000.0, 18000.0, CategoriaPlatillo.PLATO_FUERTE, EstadoPlatillo.DISPONIBLE, 10, "imagen.jpg", "Pizza de queso", "123456"));
     }
 
     @Test
