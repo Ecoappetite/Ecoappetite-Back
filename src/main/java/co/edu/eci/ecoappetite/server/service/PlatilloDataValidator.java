@@ -31,7 +31,7 @@ public class PlatilloDataValidator {
 
     public PlatilloDataValidator datosPlatilloSinCadenasVacias() throws DataValidationException{
         if(platillo.getNombre().equals("") || platillo.getImagen().equals("") || 
-            platillo.getDescripcion().equals("") || platillo.getNitRestaurante().equals("")) throw new DataValidationException("Ninguno de los datos del platillo puede ser una cadena vacia");
+            platillo.getDescripcion().equals("")) throw new DataValidationException("Ninguno de los datos del platillo puede ser una cadena vacia");
         return this;
     }
 

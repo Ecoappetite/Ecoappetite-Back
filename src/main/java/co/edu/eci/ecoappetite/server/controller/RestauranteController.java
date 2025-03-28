@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.domain.dto.RestauranteDTO;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.service.RestauranteServicio;
@@ -43,7 +44,7 @@ public class RestauranteController {
         return ResponseEntity.status(200).body(restaurantes);
     }
 
-    @GetMapping(value = "/id/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<RestauranteDTO> consultarRestaurantePorId(@PathVariable("id") String id) throws EcoappetiteException{
         var restaurante = restauranteServicio.consultarRestaurantePorId(id);
         return ResponseEntity.status(200).body(restaurante);
@@ -68,9 +69,10 @@ public class RestauranteController {
 
     }
 
-
-
-
-    
+    @PutMapping(value = "/{nombre}/platillo")
+    public ResponseEntity<String> agregarPlatilloRestaurante(@PathVariable("nombre") String nombre, @RequestBody PlatilloDTO platilloDTO) throws EcoappetiteException{
+        restauranteServicio.agregarPlatilloRestaurante(nombre,platilloDTO);
+        return ResponseEntity.status(200).body("El platillo: "+ nombre + " ha sido agregado al restaurante.");
+    } 
     
 }

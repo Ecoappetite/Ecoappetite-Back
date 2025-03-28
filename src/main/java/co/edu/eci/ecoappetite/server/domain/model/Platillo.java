@@ -16,7 +16,6 @@ import lombok.ToString;
 @ToString
 public class Platillo {
 
-    @NonNull
     private String id;
 
     @NonNull
