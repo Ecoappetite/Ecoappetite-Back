@@ -15,5 +15,6 @@ public interface RestauranteServicio {
     RestauranteDTO modificarRestaurante(String id, RestauranteDTO restauranteDTO) throws EcoappetiteException;
     void eliminarRestaurante(String id) throws EcoappetiteException;
     void agregarPlatilloRestaurante(String nombre, PlatilloDTO platilloDTO)throws EcoappetiteException;
+    void eliminarPlatilloRestaurante(String nit, String idPlatillo)throws EcoappetiteException;
     
 }
