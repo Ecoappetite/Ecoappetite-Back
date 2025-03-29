@@ -35,7 +35,7 @@ public class PlatilloController {
         return ResponseEntity.status(200).body(platillos);
     }
 
-    @GetMapping(value = "/id/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<PlatilloDTO> consultarPlatilloPorId(@PathVariable("id") String id) throws EcoappetiteException{
         var platillo = platilloServicio.consultarPlatilloPorId(id);
         return ResponseEntity.status(200).body(platillo);
@@ -53,10 +53,6 @@ public class PlatilloController {
         return ResponseEntity.status(201).body("El Platillo: " + platilloDTO.getNombre() + " ha sido modificado");
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> eliminarPlatillo(@PathVariable("id") String id) throws EcoappetiteException{
-        platilloServicio.eliminarPlatillo(id);
-        return ResponseEntity.status(200).body("El platillo: " + id + " ha sido eliminado");
-    }
+
 
 }

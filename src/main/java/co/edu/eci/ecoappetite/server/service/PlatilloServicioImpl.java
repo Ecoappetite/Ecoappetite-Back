@@ -62,5 +62,10 @@ public class PlatilloServicioImpl implements PlatilloServicio{
     public void eliminarPlatillo(String id) throws EcoappetiteException{
         platilloRepositorio.eliminarPlatillo(id);
     }
+
+    @Override
+    public void eliminarPlatilloPorNitRestaurante(String nit) throws EcoappetiteException {
+        platilloRepositorio.eliminarPlatilloPorNitRestaurante(nit);
+    }
     
 }

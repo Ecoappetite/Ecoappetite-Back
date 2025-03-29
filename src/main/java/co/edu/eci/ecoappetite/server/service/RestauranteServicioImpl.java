@@ -9,6 +9,7 @@ import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.domain.dto.RestauranteDTO;
 import co.edu.eci.ecoappetite.server.domain.model.Platillo;
 import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
+import co.edu.eci.ecoappetite.server.exception.DuplicationErrorException;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.PlatilloMapper;
 import co.edu.eci.ecoappetite.server.mapper.RestauranteMapper;
@@ -61,16 +62,24 @@ public class RestauranteServicioImpl implements RestauranteServicio {
     }
 
     @Override
-    public void eliminarRestaurante(String id) throws EcoappetiteException {
-        restauranteRepositorio.eliminarRestaurante(id);        
+    public void eliminarRestaurante(String nit) throws EcoappetiteException {
+        platilloServicio.eliminarPlatilloPorNitRestaurante(nit);
+        restauranteRepositorio.eliminarRestaurante(nit);        
     }
 
     @Override
-    public void agregarPlatilloRestaurante(String nit, PlatilloDTO platilloDTO) throws EcoappetiteException {
+    public void agregarPlatilloRestaurante(String nombre, PlatilloDTO platilloDTO) throws EcoappetiteException {
         Platillo platillo = platilloMapper.toDomain(platilloDTO);
-        if(restauranteRepositorio.existePlatillo(nit, platillo)) throw new EcoappetiteException("El platillo " + platillo.getNombre() + " ya fue agregado al restaurante");
+        if(restauranteRepositorio.existePlatillo(nombre, platillo)) throw new DuplicationErrorException("El platillo " + platillo.getNombre() + " ya fue agregado al restaurante");
         PlatilloDTO platilloDTOGuardado = platilloServicio.agregarPlatillo(platilloDTO);
-        restauranteRepositorio.agregarPlatilloRestaurante(nit,platilloMapper.toDomain(platilloDTOGuardado));
+        restauranteRepositorio.agregarPlatilloRestaurante(nombre,platilloMapper.toDomain(platilloDTOGuardado));
+    }
+
+    @Override
+    public void eliminarPlatilloRestaurante(String nit, String idPlatillo) throws EcoappetiteException {
+        platilloServicio.eliminarPlatillo(idPlatillo);        
+        restauranteRepositorio.eliminarPlatilloRestaurante(nit, idPlatillo);
+    
     }
     
 }
