@@ -73,5 +73,10 @@ public class MongoPlatilloRepositorio implements PlatilloRepositorio {
     public void eliminarPlatillo(String id) throws EcoappetiteException{
         mongoPlatilloInterface.deleteById(id);
     }
+
+    @Override
+    public void eliminarPlatilloPorNitRestaurante(String nit) throws EcoappetiteException {
+        mongoPlatilloInterface.deleteByNitRestaurante(nit);
+    }
     
 }

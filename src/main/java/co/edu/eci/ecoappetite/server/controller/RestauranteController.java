@@ -58,10 +58,10 @@ public class RestauranteController {
         return ResponseEntity.status(201).body("El restaurante: "+ restauranteDTO.getNombre() + " ha sido modificado.");
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> eliminarRestaurante(@PathVariable("id") String id) throws EcoappetiteException{
-        restauranteServicio.eliminarRestaurante(id);
-        return ResponseEntity.status(200).body("El restaurante: "+ id + " ha sido eliminado.");
+    @DeleteMapping(value = "/{nit}")
+    public ResponseEntity<String> eliminarRestaurante(@PathVariable("nit") String nit) throws EcoappetiteException{
+        restauranteServicio.eliminarRestaurante(nit);
+        return ResponseEntity.status(200).body("El restaurante: "+ nit + " ha sido eliminado.");
 
     }
 

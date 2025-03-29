@@ -61,8 +61,9 @@ public class RestauranteServicioImpl implements RestauranteServicio {
     }
 
     @Override
-    public void eliminarRestaurante(String id) throws EcoappetiteException {
-        restauranteRepositorio.eliminarRestaurante(id);        
+    public void eliminarRestaurante(String nit) throws EcoappetiteException {
+        platilloServicio.eliminarPlatilloPorNitRestaurante(nit);
+        restauranteRepositorio.eliminarRestaurante(nit);        
     }
 
     @Override
