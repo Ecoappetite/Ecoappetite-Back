@@ -9,6 +9,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.dao.DuplicateKeyException;
 
 import co.edu.eci.ecoappetite.server.exception.DataValidationException;
+import co.edu.eci.ecoappetite.server.exception.DuplicationErrorException;
 import co.edu.eci.ecoappetite.server.exception.MessageException;
 
 import co.edu.eci.ecoappetite.server.exception.NotFoundException;
@@ -45,6 +46,11 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<String> handlerException(DuplicateKeyException duplicateKeyException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MessageException.DATA_VALIDATION_ERROR.getMessage() + ": " + duplicateKeyException.getMessage());
+    }
+
+    @ExceptionHandler(DuplicationErrorException.class)
+    public ResponseEntity<String> handlerException(DuplicationErrorException duplicationErrorException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MessageException.DATA_DUPLICATION_ERROR.getMessage() + ": " + duplicationErrorException.getMessage());
     }
 
 
