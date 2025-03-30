@@ -47,12 +47,4 @@ public class PlatilloController {
         return ResponseEntity.status(200).body(platillo);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<String> modificarPlatillo(@PathVariable("id") String id, @RequestBody PlatilloDTO platilloDTO) throws EcoappetiteException{
-        platilloServicio.modificarPlatillo(id, platilloDTO);
-        return ResponseEntity.status(201).body("El Platillo: " + platilloDTO.getNombre() + " ha sido modificado");
-    }
-
-
-
 }

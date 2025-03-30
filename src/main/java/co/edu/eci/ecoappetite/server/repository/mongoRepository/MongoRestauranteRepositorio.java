@@ -1,5 +1,6 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,6 +96,32 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
                 .orElseThrow(() -> new NotFoundException("Este restaurante no fue encontrado"));
         restauranteEntidad.getPlatillos().removeIf(platillo -> platillo.getId().equals(idPlatillo));
         mongoRestauranteInterface.save(restauranteEntidad);
+    }
+
+    @Override
+    public Restaurante modificarPlatilloRestaurante(String nit, String idPlatillo, Platillo platillo) throws EcoappetiteException{
+        RestauranteEntidad restauranteEntidad = mongoRestauranteInterface.findById(nit)
+                .orElseThrow(() -> new NotFoundException("Este restaurante no fue encontrado"));
+
+        List<PlatilloEntidad> platillos = new ArrayList<>(restauranteEntidad.getPlatillos());
+
+        boolean modificado = false;
+        for (int i = 0; i < platillos.size(); i++) {
+            if (platillos.get(i).getId().equals(idPlatillo)) {
+                PlatilloEntidad platilloEntidadActualizado = platilloMapper.toEntity(platillo);
+                platilloEntidadActualizado.setId(idPlatillo); // aseguramos que mantenga el mismo ID
+                platillos.set(i, platilloEntidadActualizado);
+                modificado = true;
+                break;
+            }
+        }
+            
+        if (!modificado) throw new NotFoundException("El platillo con ID " + idPlatillo + " no fue encontrado en el restaurante");
+            
+        restauranteEntidad.setPlatillos(platillos);
+        RestauranteEntidad restauranteActualizado = mongoRestauranteInterface.save(restauranteEntidad);
+        return restauranteMapper.toDomain(restauranteActualizado);
+
     }
 
     @Override

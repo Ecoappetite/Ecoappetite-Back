@@ -76,5 +76,11 @@ public class RestauranteController {
         restauranteServicio.eliminarPlatilloRestaurante(nit, idPlatillo);
         return ResponseEntity.status(200).body("El platillo: " + idPlatillo + " ha sido eliminado");
     }
+
+    @PutMapping(value = "/{nit}/platillo/{idPlatillo}")
+    public ResponseEntity<String> modificarPlatilloRestaurante(@PathVariable("nit") String nit, @PathVariable("idPlatillo") String idPlatillo, @RequestBody PlatilloDTO platilloDTO) throws EcoappetiteException{
+        restauranteServicio.modificarPlatilloRestaurante(nit, idPlatillo, platilloDTO);
+        return ResponseEntity.status(201).body("El Platillo: " + platilloDTO.getNombre() + " ha sido modificado");
+    }
     
 }
