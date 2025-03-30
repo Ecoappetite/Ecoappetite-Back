@@ -16,4 +16,5 @@ public interface RestauranteRepositorio {
     Restaurante agregarPlatilloRestaurante(String nombre, Platillo platillo)throws EcoappetiteException;
     boolean existePlatillo(String nombre, Platillo platillo);
     void eliminarPlatilloRestaurante(String nit, String idPlatillo) throws EcoappetiteException;
+    Restaurante modificarPlatilloRestaurante(String nit, String idPlatillo, Platillo platillo) throws EcoappetiteException;
 }

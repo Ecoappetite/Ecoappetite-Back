@@ -81,5 +81,13 @@ public class RestauranteServicioImpl implements RestauranteServicio {
         restauranteRepositorio.eliminarPlatilloRestaurante(nit, idPlatillo);
     
     }
+
+    @Override
+    public void modificarPlatilloRestaurante(String nit, String idPlatillo, PlatilloDTO platilloDTO) throws EcoappetiteException{
+        Platillo platillo = platilloMapper.toDomain(platilloDTO);
+        if(restauranteRepositorio.existePlatillo(nit, platillo)) throw new DuplicationErrorException("El platillo " + platillo.getNombre() + " ya fue agregado al restaurante");
+        PlatilloDTO platilloDTOModificado = platilloServicio.modificarPlatillo(idPlatillo,platilloDTO);
+        restauranteRepositorio.modificarPlatilloRestaurante(nit, idPlatillo, platilloMapper.toDomain(platilloDTOModificado));
+    }
     
 }
