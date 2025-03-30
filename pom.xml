@@ -92,32 +92,6 @@
 			<version>3.0.0</version>
 		</dependency>
 
-		<!-- Dependencia para manejar JWT -->
-		<dependency>
-    			<groupId>io.jsonwebtoken</groupId>
-    			<artifactId>jjwt</artifactId>
-    			<version>0.11.5</version>
-		</dependency>
-
-		<!-- Spring Security OAuth2 para autenticación con Google y Facebook -->
-		<dependency>
-    			<groupId>org.springframework.boot</groupId>
-    			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency>
-
-		<!-- Spring Boot Starter para manejar sesiones y autenticación -->
-		<dependency>
-    			<groupId>org.springframework.boot</groupId>
-    			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<!-- Dependencia para permitir CORS y comunicación con el Frontend en Vite -->
-		<dependency>
-    			<groupId>org.springframework.boot</groupId>
-    			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-
 
 	</dependencies>
 
