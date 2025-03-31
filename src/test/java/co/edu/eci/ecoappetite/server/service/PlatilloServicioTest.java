@@ -20,8 +20,6 @@ import co.edu.eci.ecoappetite.server.domain.model.Platillo;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.PlatilloMapper;
 import co.edu.eci.ecoappetite.server.repository.PlatilloRepositorio;
-import co.edu.eci.ecoappetite.server.service.PlatilloServicioImpl;
-
 
 @ExtendWith(MockitoExtension.class)
 public class PlatilloServicioTest {

@@ -1,7 +1,5 @@
 package co.edu.eci.ecoappetite.server.domain.entity;
 
-import java.util.UUID;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

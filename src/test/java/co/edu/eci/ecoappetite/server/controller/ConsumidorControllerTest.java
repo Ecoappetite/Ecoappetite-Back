@@ -1,9 +1,7 @@
 package co.edu.eci.ecoappetite.server.controller;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
-import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
-import co.edu.eci.ecoappetite.server.exception.MessageException;
 import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.service.ConsumidorServicio;
 import org.junit.jupiter.api.BeforeEach;
