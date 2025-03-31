@@ -61,6 +61,7 @@ public class MongoPlatilloRepositorio implements PlatilloRepositorio {
         platilloEntidad.setNombre(platillo.getNombre());
         platilloEntidad.setPrecioOriginal(platillo.getPrecioOriginal());
         platilloEntidad.setPrecioDescuento(platillo.getPrecioDescuento());
+        platilloEntidad.setEstadoPlatillo(platillo.getEstadoPlatillo());
         platilloEntidad.setCantidadDisponible(platillo.getCantidadDisponible());
         platilloEntidad.setImagen(platillo.getImagen());
         platilloEntidad.setDescripcion(platillo.getDescripcion());

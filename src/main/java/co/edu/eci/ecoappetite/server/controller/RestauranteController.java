@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
@@ -81,6 +82,12 @@ public class RestauranteController {
     public ResponseEntity<String> modificarPlatilloRestaurante(@PathVariable("nit") String nit, @PathVariable("idPlatillo") String idPlatillo, @RequestBody PlatilloDTO platilloDTO) throws EcoappetiteException{
         restauranteServicio.modificarPlatilloRestaurante(nit, idPlatillo, platilloDTO);
         return ResponseEntity.status(201).body("El Platillo: " + platilloDTO.getNombre() + " ha sido modificado");
+    }
+
+    @PutMapping(value = "/{nit}/platillo/{idPlatillo}/cantidad")
+    public ResponseEntity<String> modificarCantidadPlatilloRestaurante(@PathVariable("nit") String nit, @PathVariable("idPlatillo") String idPlatillo, @RequestParam("cantidadVendida") Integer cantidad) throws EcoappetiteException{
+        restauranteServicio.modificarCantidadPlatilloRestaurante(nit, idPlatillo, cantidad);
+        return ResponseEntity.status(201).body("La cantidad del platillo: " + idPlatillo + " ha sido modificada");
     }
     
 }

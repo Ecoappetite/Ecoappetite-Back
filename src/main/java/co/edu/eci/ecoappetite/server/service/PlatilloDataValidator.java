@@ -12,6 +12,7 @@ public class PlatilloDataValidator {
         PlatilloDataValidator validador = new PlatilloDataValidator(platillo);
         validador.precioOriginalMayorPrecioDescuento()
                 .estadoPlatilloAgotado()
+                .estadoPlatilloDisponible()
                 .datosPlatilloSinCadenasVacias()
                 .preciosMayoresACero()
                 .cantidadDisponibleMayorACero();        
@@ -26,6 +27,11 @@ public class PlatilloDataValidator {
     
     public PlatilloDataValidator estadoPlatilloAgotado() throws DataValidationException{
         if(platillo.getEstadoPlatillo().equals(EstadoPlatillo.AGOTADO) && platillo.getCantidadDisponible() != 0) throw new DataValidationException("El estado del platillo no puede ser AGOTADO con cantidad disponible");
+        return this;
+    }
+
+    public PlatilloDataValidator estadoPlatilloDisponible() throws DataValidationException{
+        if(platillo.getEstadoPlatillo().equals(EstadoPlatillo.DISPONIBLE) && platillo.getCantidadDisponible() <= 0) throw new DataValidationException("El estado del platillo no puede ser DISPONIBLE cuando la cantidad disponible es CER0");
         return this;
     }
 

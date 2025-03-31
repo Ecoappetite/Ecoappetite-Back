@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
 import co.edu.eci.ecoappetite.server.domain.dto.RestauranteDTO;
+import co.edu.eci.ecoappetite.server.domain.model.EstadoPlatillo;
 import co.edu.eci.ecoappetite.server.domain.model.Platillo;
 import co.edu.eci.ecoappetite.server.domain.model.Restaurante;
+import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import co.edu.eci.ecoappetite.server.exception.DuplicationErrorException;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.PlatilloMapper;
@@ -88,6 +90,26 @@ public class RestauranteServicioImpl implements RestauranteServicio {
         if(restauranteRepositorio.existePlatillo(nit, platillo)) throw new DuplicationErrorException("El platillo " + platillo.getNombre() + " ya fue agregado al restaurante");
         PlatilloDTO platilloDTOModificado = platilloServicio.modificarPlatillo(idPlatillo,platilloDTO);
         restauranteRepositorio.modificarPlatilloRestaurante(nit, idPlatillo, platilloMapper.toDomain(platilloDTOModificado));
+    }
+
+    @Override
+    public RestauranteDTO modificarCantidadPlatilloRestaurante(String nit, String idPlatillo, Integer cantidad) throws EcoappetiteException {
+        PlatilloDTO platilloDTO = platilloServicio.consultarPlatilloPorId(idPlatillo);
+        Integer cantidadTotal = platilloDTO.getCantidadDisponible() - cantidad;
+        if(cantidadTotal < 0) throw new DataValidationException("La cantidad a comprar es mayor que la disponible");
+        this.modificarEstadoPlatillo(nit, idPlatillo, cantidadTotal, platilloDTO);
+        return this.consultarRestaurantePorId(nit);
+    }
+
+    private void modificarEstadoPlatillo(String nit, String idPlatillo,  int cantidadTotal, PlatilloDTO platilloDTO) throws EcoappetiteException{
+        EstadoPlatillo estadoPlatillo = switch(cantidadTotal) {
+            case 0 -> EstadoPlatillo.AGOTADO;
+            default -> EstadoPlatillo.DISPONIBLE;
+        };
+        platilloDTO.setCantidadDisponible(cantidadTotal);
+        platilloDTO.setEstadoPlatillo(estadoPlatillo);
+        platilloServicio.modificarPlatillo(idPlatillo, platilloDTO);
+        this.modificarPlatilloRestaurante(nit, idPlatillo, platilloDTO);
     }
     
 }
