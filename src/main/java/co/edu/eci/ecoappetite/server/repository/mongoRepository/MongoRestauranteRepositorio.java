@@ -109,7 +109,7 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
         for (int i = 0; i < platillos.size(); i++) {
             if (platillos.get(i).getId().equals(idPlatillo)) {
                 PlatilloEntidad platilloEntidadActualizado = platilloMapper.toEntity(platillo);
-                platilloEntidadActualizado.setId(idPlatillo); // aseguramos que mantenga el mismo ID
+                platilloEntidadActualizado.setId(idPlatillo);
                 platillos.set(i, platilloEntidadActualizado);
                 modificado = true;
                 break;
