@@ -42,9 +42,6 @@
 			<optional>true</optional>
 		</dependency>
 
-
-
-
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
@@ -95,10 +92,10 @@
 
 
 		<!-- Necesario si usas Spring Boot -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<!-- Dependencia para manejar JWT -->
 		<dependency>

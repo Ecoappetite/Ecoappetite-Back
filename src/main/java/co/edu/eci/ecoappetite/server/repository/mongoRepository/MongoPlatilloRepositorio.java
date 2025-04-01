@@ -3,7 +3,6 @@ package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import co.edu.eci.ecoappetite.server.domain.entity.PlatilloEntidad;

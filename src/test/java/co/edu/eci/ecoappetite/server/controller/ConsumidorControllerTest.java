@@ -1,9 +1,7 @@
 package co.edu.eci.ecoappetite.server.controller;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
-import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
-import co.edu.eci.ecoappetite.server.exception.MessageException;
 import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.service.ConsumidorServicio;
 import org.junit.jupiter.api.BeforeEach;
@@ -138,4 +136,26 @@ class ConsumidorControllerTest {
         
         verify(consumidorServicio, times(1)).eliminarConsumidor("123");
     }
+
+    @Test
+    void testConsultarConsumidorPorId_RetornaNulo() throws EcoappetiteException {
+        when(consumidorServicio.consultarConsumidorPorId("123")).thenReturn(null);
+
+        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("123");
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    void testEliminarConsumidor_GenericException() throws EcoappetiteException {
+        doThrow(new RuntimeException("Fallo inesperado")).when(consumidorServicio)
+                .eliminarConsumidor("123");
+
+        assertThrows(RuntimeException.class, () -> consumidorController.eliminarConsumidor("123"));
+
+        verify(consumidorServicio, times(1)).eliminarConsumidor("123");
+    }
+
+
 }
