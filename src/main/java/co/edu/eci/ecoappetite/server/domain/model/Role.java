@@ -1,4 +1,4 @@
-package co.edu.eci.ecoappetite.server.model;
+package co.edu.eci.ecoappetite.server.domain.model;
 
 /**
  * Enumeración que define los roles disponibles en el sistema.

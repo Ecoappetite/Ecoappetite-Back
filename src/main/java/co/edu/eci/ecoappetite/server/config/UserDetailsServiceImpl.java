@@ -1,4 +1,4 @@
-package co.edu.eci.ecoappetite.server.service;
+package co.edu.eci.ecoappetite.server.config;
 
 import co.edu.eci.ecoappetite.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

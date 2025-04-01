@@ -1,9 +1,9 @@
 package co.edu.eci.ecoappetite.server.controller;
 
-import co.edu.eci.ecoappetite.server.dto.LoginRequest;
-import co.edu.eci.ecoappetite.server.dto.RegisterRequest;
-import co.edu.eci.ecoappetite.server.dto.AuthResponse;
-import co.edu.eci.ecoappetite.server.service.AuthService;
+import co.edu.eci.ecoappetite.server.domain.dto.LoginRequest;
+import co.edu.eci.ecoappetite.server.domain.dto.RegisterRequest;
+import co.edu.eci.ecoappetite.server.domain.dto.AuthResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

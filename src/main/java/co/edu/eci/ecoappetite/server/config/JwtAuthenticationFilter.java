@@ -1,7 +1,7 @@
 package co.edu.eci.ecoappetite.server.config;
 
-import co.edu.eci.ecoappetite.server.service.JwtService;
-import co.edu.eci.ecoappetite.server.service.UserDetailsServiceImpl;
+import co.edu.eci.ecoappetite.server.config.JwtService;
+import co.edu.eci.ecoappetite.server.config.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

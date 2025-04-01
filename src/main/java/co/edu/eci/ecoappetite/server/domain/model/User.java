@@ -1,4 +1,4 @@
-package co.edu.eci.ecoappetite.server.model;
+package co.edu.eci.ecoappetite.server.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;

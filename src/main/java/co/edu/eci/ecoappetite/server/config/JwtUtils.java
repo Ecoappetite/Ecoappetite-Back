@@ -1,6 +1,6 @@
 package co.edu.eci.ecoappetite.server.config;
 
-import co.edu.eci.ecoappetite.server.model.User;
+import co.edu.eci.ecoappetite.server.domain.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
