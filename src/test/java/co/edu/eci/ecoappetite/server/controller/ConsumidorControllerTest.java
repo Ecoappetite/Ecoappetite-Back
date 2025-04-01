@@ -136,4 +136,26 @@ class ConsumidorControllerTest {
         
         verify(consumidorServicio, times(1)).eliminarConsumidor("123");
     }
+
+    @Test
+    void testConsultarConsumidorPorId_RetornaNulo() throws EcoappetiteException {
+        when(consumidorServicio.consultarConsumidorPorId("123")).thenReturn(null);
+
+        ResponseEntity<ConsumidorDTO> response = consumidorController.consultarConsumidorPorId("123");
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    void testEliminarConsumidor_GenericException() throws EcoappetiteException {
+        doThrow(new RuntimeException("Fallo inesperado")).when(consumidorServicio)
+                .eliminarConsumidor("123");
+
+        assertThrows(RuntimeException.class, () -> consumidorController.eliminarConsumidor("123"));
+
+        verify(consumidorServicio, times(1)).eliminarConsumidor("123");
+    }
+
+
 }
