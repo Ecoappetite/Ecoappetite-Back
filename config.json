@@ -2,5 +2,6 @@
   "MONGO_USER": "migueltelleza",
   "MONGO_PASSWORD": "b26f0DbHXhfq8YDw",
   "MONGO_CLUSTER": "ecoappetite.c9ab2.mongodb.net",
-  "MONGO_DB": "EcoappetiteDatabase"
+  "MONGO_DB": "EcoappetiteDatabase",
+  "ACCESS_TOKEN" : "APP_USR-3018996836152543-032223-10c083457b2210d40312d25f3d096389-2338583015"
 }
