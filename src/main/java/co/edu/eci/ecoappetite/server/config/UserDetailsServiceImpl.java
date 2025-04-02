@@ -1,37 +1,27 @@
 package co.edu.eci.ecoappetite.server.config;
 
+import co.edu.eci.ecoappetite.server.UserDetailsImpl;
 import co.edu.eci.ecoappetite.server.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import co.edu.eci.ecoappetite.server.domain.model.User;
 
-/**
- * Implementación de UserDetailsService para cargar usuarios desde la base de datos.
- */
 @Service
-@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
+    @Autowired
+    UserRepository usuarioRepository;
 
-    private final UserRepository userRepository;
-
-    /**
-     * Carga un usuario por su nombre de usuario.
-     *
-     * @param username Nombre de usuario.
-     * @return Detalles del usuario si existe.
-     * @throws UsernameNotFoundException Si el usuario no existe en la base de datos.
-     */
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .map(user -> User.withUsername(user.getUsername())
-                        .password(user.getPassword())
-                        .roles(user.getRole().name()) // Se asume que Role es un ENUM
-                        .build()
-                )
+        User usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+
+        return UserDetailsImpl.build(usuario);
     }
 }

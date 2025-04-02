@@ -1,11 +1,11 @@
-package co.edu.eci.ecoappetite.server.controller;
+package co.edu.eci.ecoappetite.server.controller.security;
 
 import co.edu.eci.ecoappetite.server.domain.model.User;
 import co.edu.eci.ecoappetite.server.domain.model.Role;
 import co.edu.eci.ecoappetite.server.repository.UserRepository;
 import co.edu.eci.ecoappetite.server.domain.dto.AuthResponse;
 import co.edu.eci.ecoappetite.server.domain.dto.LoginRequest;
-import co.edu.eci.ecoappetite.server.domain.dto.RegisterRequest;
+import co.edu.eci.ecoappetite.server.domain.dto.SignupRequest;
 import co.edu.eci.ecoappetite.server.config.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,11 +31,10 @@ public class AuthService {
      * @param request Datos del usuario a registrar.
      * @return AuthResponse con el token de autenticación.
      */
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponse register(SignupRequest request) {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
                 .build();
 
         userRepository.save(user);

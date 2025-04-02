@@ -18,6 +18,9 @@ public class ServerApplication {
 		System.setProperty("MONGO_PASSWORD", ConfigLoader.get("MONGO_PASSWORD"));
 		System.setProperty("MONGO_CLUSTER", ConfigLoader.get("MONGO_CLUSTER"));
 		System.setProperty("MONGO_DB", ConfigLoader.get("MONGO_DB"));
+		System.setProperty("ACCESS_TOKEN", ConfigLoader.get("ACCESS_TOKEN"));
+
+
 
 		// Ejecutar ngrok en un hilo separado para no bloquear el inicio del servidor
 		//new Thread(ServerApplication::startNgrok).start();

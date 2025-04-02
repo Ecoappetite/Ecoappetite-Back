@@ -4,14 +4,17 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 /**
  * Entidad User que representa a los usuarios en la base de datos.
  */
-@Entity
+@Document
 @Table(name = "users")
 @Getter
 @Setter
@@ -45,12 +48,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    /**
-     * Rol del usuario (ADMIN, USER, etc.).
-     */
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_roles",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Rol> roles = new HashSet<>();
 
     /**
      * Indica si la cuenta está habilitada.
@@ -76,6 +78,9 @@ public class User {
      */
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public User(String username, String encode) {
+    }
 
     /**
      * Se ejecuta antes de insertar un nuevo usuario en la base de datos.

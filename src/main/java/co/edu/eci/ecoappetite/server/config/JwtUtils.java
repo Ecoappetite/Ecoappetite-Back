@@ -1,73 +1,61 @@
 package co.edu.eci.ecoappetite.server.config;
 
+import co.edu.eci.ecoappetite.server.UserDetailsImpl;
 import co.edu.eci.ecoappetite.server.domain.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
-/**
- * Clase de utilidad para manejar la generación y validación de tokens JWT.
- */
 @Component
 public class JwtUtils {
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    private static final String SECRET_KEY = "TuClaveSecretaSuperSeguraQueDebeSerMasLarga"; // Cambia esto por una clave más segura
-    private static final long EXPIRATION_TIME = 86400000; // 1 día en milisegundos
+    @Value("${app.jwtSecret}")
+    private String jwtSecret;
 
-    private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
-    }
+    @Value("${app.jwtExpirationMs}")
+    private int jwtExpirationMs;
 
-    /**
-     * Genera un token JWT para un usuario.
-     *
-     * @param user Usuario autenticado.
-     * @return Token JWT.
-     */
-    public String generateToken(User user) {
+    public String generateJwtToken(Authentication authentication) {
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
-    /**
-     * Valida si un token es correcto.
-     *
-     * @param token Token JWT.
-     * @return true si es válido, false si no.
-     */
-    public boolean validateToken(String token) {
+    public String getUsernameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
-        } catch (JwtException e) {
-            return false;
+        } catch (Exception e) {
+            logger.error("Error JWT: {}", e.getMessage());
         }
+
+        return false;
     }
 
-    /**
-     * Obtiene el email del usuario desde el token.
-     *
-     * @param token Token JWT.
-     * @return Email del usuario.
-     */
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claimsResolver.apply(claims);
+    public String generateToken(User user) {
+        return Jwts.builder()
+                .setSubject(user.getEmail()) // O usa user.getUsername() si lo prefieres
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
     }
 }

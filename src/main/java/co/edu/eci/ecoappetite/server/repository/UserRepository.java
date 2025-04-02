@@ -1,6 +1,6 @@
 package co.edu.eci.ecoappetite.server.repository;
 import co.edu.eci.ecoappetite.server.domain.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
  * Proporciona métodos para acceder a los usuarios en la base de datos.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends MongoRepository<User, Long> {
 
     /**
      * Busca un usuario por su nombre de usuario (email).
@@ -34,4 +34,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return Un Optional que contiene el usuario si existe.
      */
     Optional<User> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }
