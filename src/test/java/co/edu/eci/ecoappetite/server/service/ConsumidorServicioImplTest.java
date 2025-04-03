@@ -18,6 +18,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+
 // Unit tests with mocks
 @ExtendWith(MockitoExtension.class)
 class ConsumidorServicioImplTest {
@@ -51,7 +53,9 @@ class ConsumidorServicioImplTest {
                 "juan@ejemplo.com",
                 "1234567890",
                 "Calle 123",
-                "Vegetariano"
+                "Vegetariano",
+                new ArrayList<>(),
+                new ArrayList<>()
         );
     }
 
