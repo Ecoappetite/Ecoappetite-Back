@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/*
+* Clase para manejar excepciones cuando una solicitud no autenticada intenta acceder a un recurso protegido
+*/
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);

@@ -7,26 +7,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
+
     @GetMapping("/all")
     public String allAccess() {
         return "Contenido público.";
     }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/user") //petición HTTP GET a la URL
+    //Solo permite acceder a este endpoint si el usuario autenticado tiene el rol CONSUMIDOR o RESTAURANTE
+    @PreAuthorize("hasRole('CONSUMIDOR') or hasRole('RESTAURANTE')")
     public String userAccess() {
-        return "Contenido de Usuario.";
+        return "Contenido para consumidores o restaurantes.";
     }
 
-    @GetMapping("/mod")
-    @PreAuthorize("hasRole('MODERATOR')")
-    public String moderatorAccess() {
-        return "Tablero de Moderador.";
+    @GetMapping("/solo-consumidor")
+    @PreAuthorize("hasRole('CONSUMIDOR')")
+    public String soloConsumidorAccess() {
+        return "Contenido exclusivo para consumidores.";
     }
 
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Tablero de Administrador.";
+    @GetMapping("/solo-restaurante")
+    @PreAuthorize("hasRole('RESTAURANTE')")
+    public String soloRestauranteAccess(){
+        return "Contenido exclusivo para restaurantes.";
     }
 }
