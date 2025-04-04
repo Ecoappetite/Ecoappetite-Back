@@ -17,12 +17,12 @@ public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Getter
-    private UUID id;
+    private String id;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(UUID id, String username, String password,
+    public UserDetailsImpl(String id, String username, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
@@ -32,7 +32,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User usuario) {
         List<GrantedAuthority> authorities = usuario.getRoles().stream()
-                .map(rol -> new SimpleGrantedAuthority(rol.getNombre().name()))
+                .map(rol -> new SimpleGrantedAuthority(rol.name()))
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(

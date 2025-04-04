@@ -7,12 +7,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Enumeración que define los roles disponibles en el sistema.
  */
 public enum Role {
-    ADMIN, // Rol para administradores del sistema
-    USER,// Rol estándar para usuarios normales
     CONSUMIDOR,
     RESTAURANTE;
-
-
 
     @JsonCreator
     public static Role fromString(String value) {

@@ -22,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,22 +31,15 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
-    AuthenticationManager authenticationManager;
 
-    @Autowired
-    UserRepository usuarioRepository;
-
-    @Autowired
-    RolRepository rolRepository;
-
-    @Autowired
-    PasswordEncoder encoder;
-
-    @Autowired
-    JwtUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository usuarioRepository;
+    private final RolRepository rolRepository;
+    private final PasswordEncoder encoder;
+    private final JwtUtils jwtUtils;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -72,40 +67,34 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: ¡El nombre de usuario ya está en uso!"));
         }
-
+    
         // Crear nueva cuenta de usuario
-        User usuario = new User(signUpRequest.getUsername(),
-                encoder.encode(signUpRequest.getPassword()));
-
-        Set<Rol> strRoles = signUpRequest.getRoles();
-        Set<Rol> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            Rol userRole = rolRepository.findByNombre(Role.CONSUMIDOR)
-                    .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-            roles.add(userRole);
+        User usuario = new User();
+        usuario.setUsername(signUpRequest.getUsername());
+        usuario.setEmail(signUpRequest.getEmail());
+        usuario.setPassword(encoder.encode(signUpRequest.getPassword()));
+    
+        Set<String> strRoles = signUpRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
+    
+        if (strRoles == null || strRoles.isEmpty()) {
+            roles.add(Role.CONSUMIDOR);
         } else {
             strRoles.forEach(role -> {
-                if (role.equals("ADMIN")) {
-                    Rol adminRole = rolRepository.findByNombre(Role.ADMIN)
-                            .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                    roles.add(adminRole);
-                } else if (role.equals("USER")) {
-                    Rol modRole = rolRepository.findByNombre(Role.RESTAURANTE)
-                            .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                    roles.add(modRole);
+                if (role.equalsIgnoreCase("RESTAURANTE")) {
+                    roles.add(Role.RESTAURANTE);
+                } else if (role.equalsIgnoreCase("CONSUMIDOR")) {
+                    roles.add(Role.CONSUMIDOR);
                 } else {
-                    Rol userRole = rolRepository.findByNombre(Role.USER)
-                            .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                    roles.add(userRole);
+                    throw new RuntimeException("Rol inválido: " + role);
                 }
             });
         }
-
+    
         usuario.setRoles(roles);
         usuarioRepository.save(usuario);
-
+    
         return ResponseEntity.ok(new MessageResponse("¡Usuario registrado exitosamente!"));
-    }
+    }    
 }
 

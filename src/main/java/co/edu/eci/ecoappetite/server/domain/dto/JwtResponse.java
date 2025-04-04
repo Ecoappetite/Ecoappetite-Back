@@ -6,11 +6,11 @@ import java.util.UUID;
 public class JwtResponse {
     private String token;
     private String type = "Bearer";
-    private UUID id;
+    private String id;
     private String username;
     private List<String> roles;
 
-    public JwtResponse(String token, UUID id, String username, List<String> roles) {
+    public JwtResponse(String token, String id, String username, List<String> roles) {
         this.token = token;
         this.id = id;
         this.username = username;
@@ -29,11 +29,11 @@ public class JwtResponse {
         return type;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
