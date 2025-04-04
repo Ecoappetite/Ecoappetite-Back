@@ -1,5 +1,7 @@
 package co.edu.eci.ecoappetite.server.domain.model;
 
+import java.util.List;
+
 import lombok.*;
 
 @Getter
@@ -17,4 +19,7 @@ public class Consumidor {
     private String telefono;
     private String direccion;
     private String preferencias;
+
+    private List<String> restaurantesFavoritos;
+    private List<String> platillosFavoritos;
 }

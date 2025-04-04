@@ -1,5 +1,7 @@
 package co.edu.eci.ecoappetite.server.domain.entity;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,5 +24,8 @@ public class ConsumidorEntidad {
     private String telefono;
     private String direccion;
     private String preferencias; //JSON o lista de categorías
+
+    private List<String> restaurantesFavoritos;
+    private List<String> platillosFavoritos;
 }
 

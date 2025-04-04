@@ -1,14 +1,20 @@
-# Usar una imagen base de Java
-FROM openjdk:17-jdk-slim
-
-# Establecer el directorio de trabajo
+# Etapa 1: Descarga dependencias (cache útil para builds más rápidos)
+FROM maven:3.8.5-openjdk-17-slim AS dependency
 WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-# Copiar el archivo JAR al contenedor
-COPY target/mi-app.jar app.jar
+# Etapa 2: Build del proyecto
+FROM dependency AS build
+COPY src ./src
+RUN mvn package -B -DskipTests
 
-# Exponer el puerto en el que corre la aplicación
+# Etapa 3: Imagen final ligera con solo Java y el .jar
+FROM openjdk:17-jdk-alpine AS runtime
+WORKDIR /app
+COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar app.jar
+COPY config.json .
+
 EXPOSE 8080
-
-# Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
