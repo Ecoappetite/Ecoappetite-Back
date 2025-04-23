@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class ConsumidorDTO {
     //Clase que recibe y devuelve los datos
 
