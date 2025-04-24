@@ -2,7 +2,6 @@ package co.edu.eci.ecoappetite.server.service.motor;
 
 import java.util.List;
 
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
@@ -15,15 +14,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Mensajero {
 
-    private final ChatClient chatClient;
-
     public String pedirRecomendaciones(ConsumidorDTO consumidorDTO, List<RegistroHistorial> historial, List<RestauranteDTO> restaurante){
 
         String prompt = this.construirPrompt(consumidorDTO, historial,restaurante);
-        String respuesta = chatClient.prompt(prompt).call().content();
+        String respuesta = prompt;
         return respuesta;
-        
-
     }
 
     private String construirPrompt(ConsumidorDTO consumidorDTO, List<RegistroHistorial> historial, List<RestauranteDTO> restaurante){
