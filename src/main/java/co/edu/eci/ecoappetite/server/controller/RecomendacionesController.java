@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.eci.ecoappetite.server.exception.NotFoundException;
+import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.service.motor.MotorRecomendacion;
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ public class RecomendacionesController {
     private final MotorRecomendacion motorRecomendacion;
 
     @GetMapping(value = "/{idConsumidor}")
-    public ResponseEntity<String> recomendacionDeLaIa (@PathVariable("idConsumidor") String idConsumidor) throws NotFoundException{
+    public ResponseEntity<String> recomendacionDeLaIa (@PathVariable("idConsumidor") String idConsumidor) throws EcoappetiteException{
         String mensaje = motorRecomendacion.mensajeDevueltoPorIa(idConsumidor);
         return ResponseEntity.status(200).body(mensaje);
     }
