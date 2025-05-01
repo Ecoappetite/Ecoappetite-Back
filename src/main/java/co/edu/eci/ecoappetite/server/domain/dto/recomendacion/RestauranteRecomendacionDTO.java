@@ -1,8 +1,8 @@
-package co.edu.eci.ecoappetite.server.domain.dto;
+package co.edu.eci.ecoappetite.server.domain.dto.recomendacion;
 
 import java.util.Collection;
-
 import co.edu.eci.ecoappetite.server.domain.model.Categoria;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,16 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RestauranteDTO {
-    
+public class RestauranteRecomendacionDTO {
+
     private String nit;
     private String nombre;
-    private String direccion;
-    private String telefono;
-    private String whatsapp;
     private Categoria categoria;
-    private String imagen;
     private String descripcion;
-    private Collection<PlatilloDTO> platillos;
+    private Collection<PlatilloRecomendacionDTO> platillosRecomendacion;
     
 }

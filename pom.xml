@@ -92,11 +92,18 @@
 			<version>3.0.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-openai -->
+		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
 		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-openai</artifactId>
-			<version>1.0.0-M6</version>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.12.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20250107</version>
 		</dependency>
 	</dependencies>
 
