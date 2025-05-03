@@ -1,11 +1,9 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import co.edu.eci.ecoappetite.server.domain.entity.PlatilloEntidad;
@@ -39,7 +37,7 @@ public class MongoRestauranteRepositorio implements RestauranteRepositorio{
         return mongoRestauranteInterface.findAll()
                 .stream()
                 .map(restauranteMapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
       
     }
 

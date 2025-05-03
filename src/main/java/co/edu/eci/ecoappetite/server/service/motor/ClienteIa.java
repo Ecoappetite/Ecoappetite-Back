@@ -1,18 +1,14 @@
 package co.edu.eci.ecoappetite.server.service.motor;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import co.edu.eci.ecoappetite.server.config.bean.ClienteIAConfig;
 import co.edu.eci.ecoappetite.server.config.data.ClienteIAProperties;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -21,7 +17,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ClienteIa {
@@ -48,11 +44,11 @@ public class ClienteIa {
                 respuestaIA = response.body().string();
                   
             }else{
-                System.err.println("Mensaje" + response.message());
-                System.err.println("esta es su respuesta " +response.code());
-                System.err.println("Detalles del config"  + config);
-                System.err.println("Detalles del Request"  + request);
-                System.err.println("Detalles del Body "  + response.body().string());
+                log.error("Mensaje" + response.message());
+                log.error("esta es su respuesta " +response.code());
+                log.error("Detalles del config"  + config);
+                log.error("Detalles del Request"  + request);
+                log.error("Detalles del Body "  + response.body().string());
 
             }
             

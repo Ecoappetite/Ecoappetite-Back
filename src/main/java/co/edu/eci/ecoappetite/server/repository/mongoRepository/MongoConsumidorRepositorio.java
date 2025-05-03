@@ -11,10 +11,12 @@ import co.edu.eci.ecoappetite.server.mapper.ConsumidorMapper;
 import co.edu.eci.ecoappetite.server.repository.ConsumidorRepositorio;
 
 @Repository
+
 public class MongoConsumidorRepositorio implements ConsumidorRepositorio {
 
 
     private final MongoConsumidorInterface mongoConsumidorInterface;
+
     private final ConsumidorMapper consumidorMapper;
 
     @Autowired
