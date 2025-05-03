@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
-import co.edu.eci.ecoappetite.server.domain.dto.RestauranteDTO;
 import co.edu.eci.ecoappetite.server.domain.dto.recomendacion.RestauranteRecomendacionDTO;
 import co.edu.eci.ecoappetite.server.domain.model.RegistroHistorial;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
@@ -15,7 +14,9 @@ import co.edu.eci.ecoappetite.server.repository.RegistroHistorialRepositorio;
 import co.edu.eci.ecoappetite.server.service.ConsumidorServicio;
 import co.edu.eci.ecoappetite.server.service.RestauranteServicio;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MotorRecomendacion {
@@ -27,7 +28,7 @@ public class MotorRecomendacion {
     private final RestauranteMapper restauranteMapper;
 
     @Value("${ecoappetite.ai.retries}")
-    private Integer INTENTOS;
+    private Integer intentosMaximos;
 
 
     public String mensajeDevueltoPorIa (String idConsumidor) throws EcoappetiteException{
@@ -43,21 +44,25 @@ public class MotorRecomendacion {
     }
 
     private String reintentos(ConsumidorDTO consumidor, List<RegistroHistorial> registroCliente, List<RestauranteRecomendacionDTO> listRecomendacionRestaurante) throws EcoappetiteException{
-        int intentos = INTENTOS;
+        int intentos = 1;
         boolean huboRespuesta = false;
         String respuesta = "";
-        while (!huboRespuesta && intentos-- > 0) {
+        while (!huboRespuesta && intentos<= intentosMaximos) {
             try {
                 respuesta = mensajero.pedirRecomendaciones(consumidor, registroCliente, listRecomendacionRestaurante);
                 huboRespuesta = !respuesta.isEmpty();
                 
             } catch (EcoappetiteException e) {
+                log.info("[REINTENTO DE MENSAJES] intento {}, error {}",intentos, e.getMessage());
                 
+            } finally{
+                intentos++;
             }
+
             
         }
 
-        if (intentos==0 && !huboRespuesta) {
+        if (intentos==intentosMaximos && !huboRespuesta) {
             throw new EcoappetiteException("Limites de intentos alcanzados sin respuesta");
             
         }

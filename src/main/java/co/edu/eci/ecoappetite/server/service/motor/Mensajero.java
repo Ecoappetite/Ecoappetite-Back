@@ -46,7 +46,9 @@ public class Mensajero {
             .getJSONObject("message")
             .getString("content");
 
-        return contenido;
+        JSONObject jsonDeRespuesta = new JSONObject(contenido);
+
+        return jsonDeRespuesta.toString();
 
     }
 

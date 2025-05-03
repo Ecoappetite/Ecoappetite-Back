@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 
 import com.mongodb.lang.NonNull;
 
+import lombok.Data;
 
+@Data
 public class RegistroHistorial {
 
     private String idRegistroHistorial;

@@ -2,8 +2,6 @@ package co.edu.eci.ecoappetite.server.domain.model;
 
 import java.util.Collection;
 
-import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;

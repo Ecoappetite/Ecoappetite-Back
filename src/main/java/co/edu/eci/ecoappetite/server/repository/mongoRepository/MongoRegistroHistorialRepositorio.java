@@ -1,12 +1,11 @@
 package co.edu.eci.ecoappetite.server.repository.mongoRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import org.springframework.stereotype.Repository;
 
 import co.edu.eci.ecoappetite.server.domain.entity.RegistroHistorialEntidad;
-import co.edu.eci.ecoappetite.server.domain.entity.RestauranteEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.RegistroHistorial;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
 import co.edu.eci.ecoappetite.server.mapper.RegistroHistorialMapper;
