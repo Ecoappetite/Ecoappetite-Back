@@ -6,14 +6,17 @@ import org.springframework.stereotype.Repository;
 import co.edu.eci.ecoappetite.server.domain.entity.ConsumidorEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
+import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.mapper.ConsumidorMapper;
 import co.edu.eci.ecoappetite.server.repository.ConsumidorRepositorio;
 
 @Repository
+
 public class MongoConsumidorRepositorio implements ConsumidorRepositorio {
 
 
     private final MongoConsumidorInterface mongoConsumidorInterface;
+
     private final ConsumidorMapper consumidorMapper;
 
     @Autowired
@@ -30,9 +33,9 @@ public class MongoConsumidorRepositorio implements ConsumidorRepositorio {
     }
 
     @Override
-    public Consumidor consulatrConsumidorPorId(String id) throws EcoappetiteException {
+    public Consumidor consultarConsumidorPorId(String id) throws NotFoundException {
         ConsumidorEntidad consumidorEntidad = mongoConsumidorInterface.findById(id)
-                .orElseThrow(() -> new EcoappetiteException("EL consumidor no ha sido encontrado"));
+                .orElseThrow(() -> new NotFoundException("EL consumidor no ha sido encontrado"));
 
         return consumidorMapper.toDomain(consumidorEntidad);
     }

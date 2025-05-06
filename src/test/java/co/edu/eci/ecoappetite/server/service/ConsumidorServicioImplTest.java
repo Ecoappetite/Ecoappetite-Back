@@ -3,6 +3,7 @@ package co.edu.eci.ecoappetite.server.service;
 import co.edu.eci.ecoappetite.server.domain.dto.ConsumidorDTO;
 import co.edu.eci.ecoappetite.server.domain.model.Consumidor;
 import co.edu.eci.ecoappetite.server.exception.EcoappetiteException;
+import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.mapper.ConsumidorMapper;
 import co.edu.eci.ecoappetite.server.repository.ConsumidorRepositorio;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,15 +12,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+
+
 
 // Unit tests with mocks
 @ExtendWith(MockitoExtension.class)
@@ -55,6 +54,7 @@ class ConsumidorServicioImplTest {
                 "1234567890",
                 "Calle 123",
                 "Vegetariano"
+
         );
     }
 
@@ -89,7 +89,7 @@ class ConsumidorServicioImplTest {
     @Test
     void testConsultarConsumidorPorId() throws EcoappetiteException {
         // Arrange
-        when(consumidorRepositorio.consulatrConsumidorPorId(anyString())).thenReturn(consumidor);
+        when(consumidorRepositorio.consultarConsumidorPorId(anyString())).thenReturn(consumidor);
         when(consumidorMapper.toDTO(any(Consumidor.class))).thenReturn(consumidorDTO);
 
         // Act
@@ -99,7 +99,7 @@ class ConsumidorServicioImplTest {
         assertNotNull(resultado);
         assertEquals("123", resultado.getId());
         assertEquals("Juan Pérez", resultado.getNombre());
-        verify(consumidorRepositorio).consulatrConsumidorPorId("123");
+        verify(consumidorRepositorio).consultarConsumidorPorId("123");
         verify(consumidorMapper).toDTO(consumidor);
     }
 
@@ -121,4 +121,35 @@ class ConsumidorServicioImplTest {
         verify(consumidorRepositorio).modificarConsumidor("123", consumidor);
         verify(consumidorMapper).toDTO(consumidor);
     }
+
+    @Test
+    void testRegistrarConsumidor_CuandoRepositorioLanzaExcepcion() throws EcoappetiteException {
+        when(consumidorMapper.toDomain(consumidorDTO)).thenReturn(consumidor);
+        when(consumidorRepositorio.registrarConsumidor(any())).thenThrow(new EcoappetiteException("Error"));
+
+        assertThrows(EcoappetiteException.class, () -> consumidorServicio.registrarConsumidor(consumidorDTO));
+
+        verify(consumidorRepositorio).registrarConsumidor(consumidor);
+    }
+
+    @Test
+    void testModificarConsumidor_ExcepcionDelRepositorio() throws EcoappetiteException {
+        when(consumidorMapper.toDomain(any(ConsumidorDTO.class))).thenReturn(consumidor);
+        when(consumidorRepositorio.modificarConsumidor(anyString(), any(Consumidor.class)))
+            .thenThrow(new EcoappetiteException("Error al modificar"));
+    
+        assertThrows(EcoappetiteException.class, () -> consumidorServicio.modificarConsumidor("123", consumidorDTO));
+    
+        verify(consumidorRepositorio).modificarConsumidor("123", consumidor);
+    }    
+
+    @Test
+    void testConsultarConsumidorPorId_NoEncontrado() throws NotFoundException {
+        when(consumidorRepositorio.consultarConsumidorPorId("999")).thenThrow(new NotFoundException("No encontrado"));
+    
+        assertThrows(NotFoundException.class, () -> consumidorServicio.consultarConsumidorPorId("999"));
+    
+        verify(consumidorRepositorio).consultarConsumidorPorId("999");
+    }    
+
 }

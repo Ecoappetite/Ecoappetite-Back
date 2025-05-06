@@ -17,4 +17,5 @@ public class Consumidor {
     private String telefono;
     private String direccion;
     private String preferencias;
+
 }

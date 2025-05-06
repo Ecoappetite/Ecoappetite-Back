@@ -2,16 +2,14 @@ package co.edu.eci.ecoappetite.server.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import co.edu.eci.ecoappetite.server.domain.dto.PlatilloDTO;
+import co.edu.eci.ecoappetite.server.domain.dto.recomendacion.PlatilloRecomendacionDTO;
 import co.edu.eci.ecoappetite.server.domain.entity.PlatilloEntidad;
 import co.edu.eci.ecoappetite.server.domain.model.Platillo;
 
 @Mapper(componentModel = "spring")
 public interface PlatilloMapper {
-
-    //PlatilloMapper INSTANCE = Mappers.getMapper(PlatilloMapper.class);
     
     @Mapping(target = "id", source = "id")
     @Mapping(target = "nitRestaurante", source = "nitRestaurante")
@@ -24,5 +22,10 @@ public interface PlatilloMapper {
     Platillo toDomain(PlatilloEntidad platilloEntidad);
     //Modelo - DTO
     PlatilloDTO toDTO(Platillo platillo);
+
+    //Recomendacion
+    PlatilloRecomendacionDTO toRecomendacion(PlatilloDTO platilloDTO);
+
+
     
 }

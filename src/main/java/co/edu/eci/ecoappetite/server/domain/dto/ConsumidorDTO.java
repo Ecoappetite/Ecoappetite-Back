@@ -1,5 +1,7 @@
 package co.edu.eci.ecoappetite.server.domain.dto;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class ConsumidorDTO {
     //Clase que recibe y devuelve los datos
 
@@ -18,4 +19,5 @@ public class ConsumidorDTO {
     private String telefono;
     private String direccion;
     private String preferencias;
+
 }

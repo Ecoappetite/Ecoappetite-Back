@@ -13,4 +13,5 @@ public interface PlatilloRepositorio {
     List<Platillo> consultarPlatilloPorNombre(String nombre) throws EcoappetiteException;
     Platillo modificarPlatillo(String id, Platillo platillo) throws EcoappetiteException;
     void eliminarPlatillo(String id) throws EcoappetiteException;
+    void eliminarPlatilloPorNitRestaurante(String nit) throws EcoappetiteException;
 }

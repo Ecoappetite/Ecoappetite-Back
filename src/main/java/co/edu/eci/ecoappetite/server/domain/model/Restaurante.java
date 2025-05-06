@@ -1,5 +1,7 @@
 package co.edu.eci.ecoappetite.server.domain.model;
 
+import java.util.Collection;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -32,8 +34,11 @@ public class Restaurante {
 
     private String descripcion;
 
+    private Collection<Platillo> platillos;
 
+    public boolean existePlatillo(String nombre){
+        return platillos.parallelStream()
+                .anyMatch(platillo -> platillo.getNombre().equalsIgnoreCase(nombre));
+    }
 
-
-    
 }
