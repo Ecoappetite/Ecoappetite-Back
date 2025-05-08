@@ -7,6 +7,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import co.edu.eci.ecoappetite.server.domain.model.Usuario;
 import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import lombok.RequiredArgsConstructor;
 import io.jsonwebtoken.Claims;
@@ -33,13 +34,15 @@ public class JwtServicio implements ValidadorJwt {
         
     }
 
-    public String crearToken(){
+    public String crearToken(Usuario usuario){
 
         return Jwts.builder()
-            .subject("usuario123")
+            .subject(usuario.getCorreo())
             .issuer("ecoappetite")
             .issuedAt(new Date())
             .expiration(new Date(System.currentTimeMillis() + expiracionToken)) // 1 hora
+            .claim("rol", usuario.getRol())
+            .claim("idEntidad", usuario.getIdEntidadAlmacenada())
             .signWith(key, Jwts.SIG.HS256)
             .compact();
     }
