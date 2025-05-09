@@ -7,10 +7,12 @@ import co.edu.eci.ecoappetite.server.service.ConsumidorServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Secured("CONSUMIDOR")
 @RequestMapping("/consumidor")
 public class ConsumidorController {
 
