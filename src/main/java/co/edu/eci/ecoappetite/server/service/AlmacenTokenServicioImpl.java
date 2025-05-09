@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import co.edu.eci.ecoappetite.server.domain.model.Rol;
 import co.edu.eci.ecoappetite.server.exception.DataValidationException;
 import co.edu.eci.ecoappetite.server.service.jwt.ValidadorJwt;
 
@@ -28,9 +29,20 @@ public class AlmacenTokenServicioImpl implements AlmacenTokenServicio {
     }
 
     @Override
-    public Boolean verificacionToken(String identToken, String token) throws DataValidationException{
+    public Boolean verificacionToken(String token) throws DataValidationException{
+        String identToken = validadorJwt.obtenerSubject(token);
         
-        return tokenMap.containsKey(identToken) && this.validadorJwt.validarToken(token) && tokenMap.get(identToken).equals(token);
+        return tokenMap.containsKey(identToken) && tokenMap.get(identToken).equals(token);
+    }
+
+    @Override
+    public Rol obtenerRol(String token) throws DataValidationException {
+        return Rol.valueOf(validadorJwt.obtenerRol(token));
+    }
+
+    @Override
+    public String obtenerSubject(String token) throws DataValidationException {
+        return validadorJwt.obtenerSubject(token);
     }
 
    
