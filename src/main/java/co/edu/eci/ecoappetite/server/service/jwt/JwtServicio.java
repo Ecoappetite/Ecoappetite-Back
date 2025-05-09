@@ -70,6 +70,22 @@ public class JwtServicio implements ValidadorJwt {
             .getPayload();
     }
 
+    @Override
+    public String obtenerSubject(String token) throws DataValidationException {
+        try{
+            return obtenerClaims(token).getSubject();
+        }catch(JwtException e){
+            throw new DataValidationException("Token sin sujeto");
+        }
+    }
 
+    @Override
+    public String obtenerRol(String token) throws DataValidationException {
+        try{
+            return obtenerClaims(token).get("rol", String.class);
+        }catch(JwtException e){
+            throw new DataValidationException("Token sin rol");
+        }
+    }
     
 }
