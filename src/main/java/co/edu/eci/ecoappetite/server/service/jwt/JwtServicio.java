@@ -52,8 +52,6 @@ public class JwtServicio implements ValidadorJwt {
         try{
             return obtenerClaims(token).getIssuer().equals("ecoappetite");
 
-
-
         }catch( JwtException e){
             throw new DataValidationException("Token no válido");
 
