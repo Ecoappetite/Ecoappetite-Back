@@ -46,5 +46,12 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         almacenTokenServicio.almacenarToken(usuario.getCorreo(), token);
         return token;
     }
+
+    @Override
+    public void logout(UsuarioDTO usuarioDTO) throws NotFoundException {
+        String correo = usuarioDTO.getCorreo();
+        if(!usuarioRepositorio.existeUsuario(correo)) throw new NotFoundException("El usuario no fue encontrado");
+        almacenTokenServicio.borrarToken(correo);
+    }
     
 }
