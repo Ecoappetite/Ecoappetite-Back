@@ -9,5 +9,6 @@ public interface RegistroHistorialRepositorio {
 
   RegistroHistorial guardarRegistroHistorial(RegistroHistorial registroHistorial) throws EcoappetiteException;
   List<RegistroHistorial> consultaRegistroHistorial(String idConsumidor);
+  List<RegistroHistorial> consultarTodasLasRecomendaciones();
     
 }
