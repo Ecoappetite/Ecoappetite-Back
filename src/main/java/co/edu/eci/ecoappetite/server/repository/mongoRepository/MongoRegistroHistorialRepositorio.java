@@ -35,5 +35,14 @@ public class MongoRegistroHistorialRepositorio implements RegistroHistorialRepos
             .toList();
  
     }
+
+    @Override
+    public List<RegistroHistorial> consultarTodasLasRecomendaciones() {
+        return mongoRegistroHistorialInterface.findAll()
+        .stream()
+        .map(registroHistorialMapper::toDomain)
+        .toList();
+        
+    }
     
 }

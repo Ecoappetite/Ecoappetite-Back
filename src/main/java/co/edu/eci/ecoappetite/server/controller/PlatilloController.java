@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/platillo")
-@Secured("RESTAURANTE")
+@Secured({"RESTAURANTE", "CONSUMIDOR"})
 public class PlatilloController {
 
     private final PlatilloServicio platilloServicio;
@@ -29,6 +29,8 @@ public class PlatilloController {
         return ResponseEntity.status(200).body(platillos);
     }
 
+
+    @Secured("RESTAURANTE")
     @GetMapping(value = "/{id}")
     public ResponseEntity<PlatilloDTO> consultarPlatilloPorId(@PathVariable("id") String id) throws EcoappetiteException{
         var platillo = platilloServicio.consultarPlatilloPorId(id);
