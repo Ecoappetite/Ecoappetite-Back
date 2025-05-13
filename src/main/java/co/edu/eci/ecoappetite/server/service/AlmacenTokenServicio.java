@@ -2,6 +2,7 @@ package co.edu.eci.ecoappetite.server.service;
 
 import co.edu.eci.ecoappetite.server.domain.model.Rol;
 import co.edu.eci.ecoappetite.server.exception.DataValidationException;
+import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 
 public interface AlmacenTokenServicio {
 
@@ -12,6 +13,8 @@ public interface AlmacenTokenServicio {
     public Rol obtenerRol(String token) throws DataValidationException;
 
     public String obtenerSubject (String token) throws DataValidationException;
+
+    public void borrarToken(String correo);
 
     
 }

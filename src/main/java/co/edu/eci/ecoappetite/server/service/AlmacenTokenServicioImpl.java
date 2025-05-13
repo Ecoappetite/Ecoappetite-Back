@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import co.edu.eci.ecoappetite.server.domain.model.Rol;
 import co.edu.eci.ecoappetite.server.exception.DataValidationException;
+import co.edu.eci.ecoappetite.server.exception.NotFoundException;
 import co.edu.eci.ecoappetite.server.service.jwt.ValidadorJwt;
 
 @Service
@@ -43,6 +44,11 @@ public class AlmacenTokenServicioImpl implements AlmacenTokenServicio {
     @Override
     public String obtenerSubject(String token) throws DataValidationException {
         return validadorJwt.obtenerSubject(token);
+    }
+
+    @Override
+    public void borrarToken(String correo){
+        tokenMap.remove(correo);   
     }
 
    
