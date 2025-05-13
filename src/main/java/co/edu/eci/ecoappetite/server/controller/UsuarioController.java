@@ -2,11 +2,9 @@ package co.edu.eci.ecoappetite.server.controller;
 
 import java.util.Map;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,5 +55,11 @@ public class UsuarioController {
     public ResponseEntity<String> login(@RequestBody UsuarioDTO usuarioDTO) throws EcoappetiteException{
         String token = usuarioServicio.login(usuarioDTO);
         return ResponseEntity.status(200).body(token);
+    }
+
+    @PostMapping(value = "/logout")
+    public ResponseEntity<String> logout(@RequestBody UsuarioDTO usuarioDTO) throws EcoappetiteException{
+        usuarioServicio.logout(usuarioDTO);
+        return ResponseEntity.status(200).body("Logout exitoso");
     }
 }
