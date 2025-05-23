@@ -116,6 +116,12 @@ mvn spring-boot:run
 La aplicación se ejecutará en **http://localhost:8000**
 
 ---
+## **🛠 Arquitectura del proyecto**
+
+![](images/Diagrama.png)
+
+
+---
 
 ## **📌 Enlace a la planificación del proyecto**
 Para más detalles sobre el desarrollo y la planificación, visita nuestro tablero en Azure DevOps:  
